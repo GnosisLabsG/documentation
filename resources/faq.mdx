@@ -1,0 +1,133 @@
+---
+title: "FAQ & Troubleshooting"
+description: "Answers to common questions and solutions for frequent issues."
+---
+
+## General
+
+<AccordionGroup>
+  <Accordion title="What is Mind-e?">
+    Mind-e is a platform for creating AI agents that answer questions from your documents, websites, and custom content. You upload your content, create an agent, and deploy it as a chat widget on your website or connect it to social media platforms.
+  </Accordion>
+
+  <Accordion title="What AI models does Mind-e use?">
+    Mind-e supports models from OpenAI (GPT-4o, GPT-4.1, GPT-5), Google (Gemini), Anthropic (Claude), and xAI (Grok). You choose the model for each agent in its settings. GPT-4o is the default.
+  </Accordion>
+
+  <Accordion title="Is my data secure?">
+    Your documents are stored in Supabase (PostgreSQL and object storage). Sensitive tokens (social media API keys) are encrypted before storage. Each agent has an isolated vector namespace — agents cannot access each other's data.
+  </Accordion>
+</AccordionGroup>
+
+## Documents & Knowledge Base
+
+<AccordionGroup>
+  <Accordion title="My document is stuck in 'processing' status">
+    Document processing typically takes 10–60 seconds. If a document is stuck for more than a few minutes:
+    - Delete the document and re-upload it
+    - Check that the file isn't corrupted (try opening it locally)
+    - For PDFs, ensure the document contains text (scanned image-only PDFs may fail)
+    - Check that you haven't exceeded your storage limit
+  </Accordion>
+
+  <Accordion title="What file types are supported?">
+    PDF (`.pdf`), Word (`.docx`), text (`.txt`), and Markdown (`.md`). See [Limits](/resources/limits) for size and page limits per format.
+  </Accordion>
+
+  <Accordion title="My agent doesn't answer correctly from uploaded documents">
+    - Check that the document status shows **Embedded** (not processing or error)
+    - Try asking the question differently — longer, more specific questions perform better
+    - Enable **query expansion** in agent settings to improve retrieval for short questions
+    - Review the **sources** shown with each response to see which documents are being referenced
+    - Add a **text snippet** with the specific answer if the agent consistently misses it
+  </Accordion>
+
+  <Accordion title="Can I upload multiple documents at once?">
+    Yes, you can upload multiple documents. Each one is processed independently. All documents contribute to the agent's knowledge base.
+  </Accordion>
+</AccordionGroup>
+
+## Chat & Widget
+
+<AccordionGroup>
+  <Accordion title="The chat widget doesn't appear on my website">
+    - Ensure the script is placed before the closing `</body>` tag
+    - Verify that `window.mindeConfig` is defined **before** the widget script loads
+    - Check that the agent ID is correct
+    - Open your browser's developer console and look for errors
+    - Make sure your site's Content Security Policy allows scripts from `widget.mind-e.co`
+  </Accordion>
+
+  <Accordion title="Chat responses are slow">
+    Response time depends on:
+    - The AI model selected (larger models take longer)
+    - The size of the knowledge base (more content = longer search time)
+    - Whether streaming is enabled (streaming shows results progressively)
+
+    If speed is a priority, use a mini-tier model like GPT-4o Mini.
+  </Accordion>
+
+  <Accordion title="Can I customize the widget appearance?">
+    Yes. You can customize colors (solid or gradient), fonts, avatars, welcome messages, widget position (bottom-left or bottom-right), and chat direction (LTR/RTL). See [Chat Appearance](/guides/chat-appearance).
+  </Accordion>
+</AccordionGroup>
+
+## Credits & Billing
+
+<AccordionGroup>
+  <Accordion title="I ran out of credits — what happens?">
+    When your credit balance reaches 0, AI-powered features stop working. Chat messages, text-to-speech, and scenario triggers will fail. Upload your plan to get more monthly credits, or wait for the next billing cycle when credits reset.
+  </Accordion>
+
+  <Accordion title="Do unused credits roll over?">
+    No. Credits reset at the start of each billing cycle. Unused credits do not carry over.
+  </Accordion>
+
+  <Accordion title="Can I buy additional credits without upgrading?">
+    Currently, credits are only available through subscription plans. There is no option to purchase credits separately.
+  </Accordion>
+
+  <Accordion title="How do I see what's using my credits?">
+    Go to your dashboard and check:
+    - **Credit summary** for a breakdown by feature and agent
+    - **Credit history** for individual transactions
+    - **Agent analytics** for per-agent usage
+  </Accordion>
+</AccordionGroup>
+
+## Social Integrations
+
+<AccordionGroup>
+  <Accordion title="Why can't I connect social media integrations?">
+    Social integrations require a **paid plan** (Starter or above). If you're on the Free plan, upgrade to enable integrations.
+  </Accordion>
+
+  <Accordion title="My Telegram bot isn't responding">
+    - Check that the integration status shows **Connected** in the Integration tab
+    - Verify the bot token is correct (get it from [@BotFather](https://t.me/BotFather))
+    - Try disconnecting and reconnecting the integration
+    - Check that your agent has content in its knowledge base
+  </Accordion>
+
+  <Accordion title="What happens to social integrations if I downgrade to Free?">
+    All social media integrations are **automatically disconnected** when you downgrade to the Free plan. You'll need to reconnect them if you upgrade again.
+  </Accordion>
+</AccordionGroup>
+
+## API
+
+<AccordionGroup>
+  <Accordion title="How do I get an API key?">
+    Go to your [dashboard settings](https://app.mind-e.co/dashboard/settings), find the API Keys section, and click **Create API Key**. See [API Keys](/account/api-keys) for details.
+  </Accordion>
+
+  <Accordion title="I'm getting 401 Unauthorized errors">
+    - Check that your API key is correct and active
+    - Ensure you're using the `Authorization: Bearer <key>` header format
+    - If the key is scoped to a specific agent, make sure you're using the right agent ID
+  </Accordion>
+
+  <Accordion title="I'm getting 429 Too Many Requests">
+    You've hit the rate limit. Check the `X-RateLimit-Reset` header in the response for when you can retry. Reduce your request frequency or contact support for higher limits.
+  </Accordion>
+</AccordionGroup>

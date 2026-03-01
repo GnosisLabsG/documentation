@@ -1,0 +1,59 @@
+---
+title: "Conversion Status"
+description: "Check the processing status of a document conversion."
+---
+
+Check whether a document has finished processing (conversion, chunking, and embedding).
+
+## Endpoint
+
+```
+POST /convert-document/status
+```
+
+## Authentication
+
+Required.
+
+## Request body
+
+<ParamField body="documentId" type="string" required>
+  The document ID to check.
+</ParamField>
+
+## Response
+
+<ResponseField name="success" type="boolean">
+  Whether the request was successful.
+</ResponseField>
+
+<ResponseField name="status" type="string">
+  Processing status: `processing`, `chunking`, `completed`, or `error`.
+</ResponseField>
+
+## Processing stages
+
+| Status | Description |
+|--------|-------------|
+| `processing` | Document is being converted to markdown |
+| `chunking` | Text is being split into chunks and embedded |
+| `completed` | Document is ready — the agent can use it |
+| `error` | Processing failed |
+
+## Example
+
+```bash
+curl -X POST https://api.mind-e.co/convert-document/status \
+  -H "Authorization: Bearer sk_live_your_key_here" \
+  -H "Content-Type: application/json" \
+  -d '{ "documentId": "doc-id-here" }'
+```
+
+### Response
+
+```json
+{
+  "success": true,
+  "status": "completed"
+}
+```

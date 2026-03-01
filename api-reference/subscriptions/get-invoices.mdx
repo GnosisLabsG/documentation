@@ -1,0 +1,60 @@
+---
+title: "Get Invoices"
+description: "List all invoices for your account."
+---
+
+## Endpoint
+
+```
+GET /subscriptions/invoices
+```
+
+## Authentication
+
+Required.
+
+## Response
+
+<ResponseField name="success" type="boolean" />
+
+<ResponseField name="invoices" type="array">
+  <Expandable>
+    <ResponseField name="transactionId" type="string">Paddle transaction ID</ResponseField>
+    <ResponseField name="invoiceNumber" type="string">Invoice number (or null)</ResponseField>
+    <ResponseField name="status" type="string">Transaction status</ResponseField>
+    <ResponseField name="amount" type="string">Formatted amount (e.g., "$150.00")</ResponseField>
+    <ResponseField name="amountRaw" type="number">Amount in cents</ResponseField>
+    <ResponseField name="currencyCode" type="string">Currency code (e.g., "USD")</ResponseField>
+    <ResponseField name="billedAt" type="string">Billing date (ISO 8601)</ResponseField>
+    <ResponseField name="periodStart" type="string">Billing period start (or null)</ResponseField>
+    <ResponseField name="periodEnd" type="string">Billing period end (or null)</ResponseField>
+  </Expandable>
+</ResponseField>
+
+## Example
+
+```bash
+curl "https://api.mind-e.co/subscriptions/invoices" \
+  -H "Authorization: Bearer sk_live_your_key_here"
+```
+
+### Response
+
+```json
+{
+  "success": true,
+  "invoices": [
+    {
+      "transactionId": "txn_abc123",
+      "invoiceNumber": "INV-001",
+      "status": "completed",
+      "amount": "$150.00",
+      "amountRaw": 15000,
+      "currencyCode": "USD",
+      "billedAt": "2026-02-01T00:00:00Z",
+      "periodStart": "2026-02-01T00:00:00Z",
+      "periodEnd": "2026-03-01T00:00:00Z"
+    }
+  ]
+}
+```

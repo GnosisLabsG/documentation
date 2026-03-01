@@ -1,0 +1,35 @@
+---
+title: "Get Web Source"
+description: "Get details of a specific web source."
+---
+
+## Endpoint
+
+```
+GET /web-sources/{id}
+```
+
+## Authentication
+
+Required.
+
+## Path parameters
+
+<ParamField path="id" type="string" required>
+  The web source ID.
+</ParamField>
+
+## Response
+
+<ResponseField name="success" type="boolean" />
+
+<ResponseField name="webSource" type="object">
+  The web source object (see [List Web Sources](/api-reference/web-sources/list) for the full shape).
+</ResponseField>
+
+## Example
+
+```bash
+curl "https://api.mind-e.co/web-sources/ws-id-here" \
+  -H "Authorization: Bearer sk_live_your_key_here"
+```

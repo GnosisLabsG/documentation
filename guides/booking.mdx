@@ -1,0 +1,117 @@
+---
+title: "Booking & Appointments"
+description: "Let users schedule appointments directly in your agent's chat — configure availability, duration options, and booking forms."
+---
+
+The booking feature lets your agent schedule appointments with users directly in the chat. Users select a date, time slot, and duration, then fill out a booking form.
+
+## Setting up booking
+
+<Steps>
+  <Step title="Enable the booking action">
+    Go to your agent's **Settings** tab and add a new **Booking** action. Give it a name and configure when the AI should offer it (e.g., "when the user wants to schedule a meeting").
+  </Step>
+
+  <Step title="Configure basic settings">
+    | Setting | Description |
+    |---------|-------------|
+    | Booking title | Title shown in the booking interface |
+    | Booking description | Optional description or instructions |
+    | Timezone | Your timezone (IANA format, e.g., "America/New_York") |
+    | Slot interval | Time between available slots: 15, 30, or 60 minutes |
+    | Buffer minutes | Gap between consecutive bookings |
+  </Step>
+
+  <Step title="Set duration options">
+    Add one or more duration options that users can choose from:
+
+    - **Label** — what the user sees (e.g., "30-minute consultation")
+    - **Duration** — length in minutes
+
+    You can offer multiple options like a 15-minute quick call and a 60-minute deep dive.
+  </Step>
+
+  <Step title="Configure availability">
+    Set your weekly schedule — which days and hours you're available:
+
+    | Day | Default hours | Default status |
+    |-----|--------------|----------------|
+    | Sunday | 09:00–17:00 | Disabled |
+    | Monday | 09:00–17:00 | Enabled |
+    | Tuesday | 09:00–17:00 | Enabled |
+    | Wednesday | 09:00–17:00 | Enabled |
+    | Thursday | 09:00–17:00 | Enabled |
+    | Friday | 09:00–17:00 | Enabled |
+    | Saturday | 09:00–17:00 | Disabled |
+
+    Adjust start and end times for each day. Toggle days on or off.
+  </Step>
+
+  <Step title="Set booking rules">
+    | Rule | Description |
+    |------|-------------|
+    | Min notice hours | Minimum hours before a slot can be booked (prevents last-minute bookings) |
+    | Max advance days | How far ahead users can book |
+    | Max bookings per slot | 1 for exclusive appointments, higher for group slots |
+  </Step>
+
+  <Step title="Customize the booking form">
+    Configure the fields users fill out when booking. Default fields are **Name** and **Email**. You can add:
+
+    - **Text fields** — for custom information
+    - **Email fields** — with email validation
+    - **Phone fields** — for phone numbers
+    - **Textarea** — for longer messages
+    - **File upload** — accepts PDF, DOCX, XLSX, PPTX, PNG, JPG, TXT
+  </Step>
+
+  <Step title="Configure cancellation">
+    | Setting | Description |
+    |---------|-------------|
+    | Allow user cancellation | Whether users can cancel their own bookings |
+    | Cancellation notice hours | Minimum hours before the appointment for cancellation |
+  </Step>
+</Steps>
+
+## Blocking dates
+
+Block specific dates when you're unavailable (holidays, days off, etc.):
+
+1. Go to the booking configuration
+2. Add a **blocked date** with the date (YYYY-MM-DD format) and an optional reason
+3. No slots will be available on blocked dates
+
+## How users book
+
+When the AI triggers the booking action in a conversation:
+
+1. The user sees available **dates** based on your schedule and blocked dates
+2. They select a date and see available **time slots**
+3. They choose a **duration** option (if multiple are configured)
+4. They fill out the **booking form**
+5. They receive a **confirmation code**
+
+## Managing bookings
+
+View and manage all bookings in your agent's dashboard. Each booking shows:
+
+- Date and time
+- Duration
+- Confirmation code
+- Form data submitted
+- Status
+
+### Booking statuses
+
+| Status | Description |
+|--------|-------------|
+| Pending | Awaiting confirmation |
+| Confirmed | Booking is confirmed |
+| Declined | Booking was declined |
+| Cancelled | Booking was cancelled by user or admin |
+| Completed | Appointment has taken place |
+| No show | User didn't attend |
+
+## Public booking API
+
+Booking is also available through the [Booking API](/api-reference/booking/get-config) for custom integrations. Users can check availability, create bookings, and cancel bookings programmatically.

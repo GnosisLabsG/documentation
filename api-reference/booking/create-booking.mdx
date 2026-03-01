@@ -1,0 +1,100 @@
+---
+title: "Create Booking"
+description: "Create a new booking for an available time slot."
+---
+
+## Endpoint
+
+```
+POST /booking/public/create
+```
+
+## Authentication
+
+None required (public endpoint).
+
+## Request body
+
+<ParamField body="agentId" type="string" required>
+  The agent ID.
+</ParamField>
+
+<ParamField body="conversationId" type="string" required>
+  The conversation ID where the booking was initiated.
+</ParamField>
+
+<ParamField body="date" type="string" required>
+  Booking date in `YYYY-MM-DD` format.
+</ParamField>
+
+<ParamField body="time" type="string" required>
+  Booking time in `HH:MM` format.
+</ParamField>
+
+<ParamField body="durationOptionId" type="string" required>
+  ID of the selected duration option (from [Get Config](/api-reference/booking/get-config)).
+</ParamField>
+
+<ParamField body="formData" type="object" required>
+  Key-value pairs of form field responses. Keys are the field IDs from the booking config.
+</ParamField>
+
+## Response
+
+<ResponseField name="success" type="boolean" />
+
+<ResponseField name="booking" type="object">
+  <Expandable>
+    <ResponseField name="id" type="string">Booking ID</ResponseField>
+    <ResponseField name="booking_code" type="string">Confirmation code (format: BK-XXXXXX)</ResponseField>
+    <ResponseField name="booking_date" type="string">Date (YYYY-MM-DD)</ResponseField>
+    <ResponseField name="start_time" type="string">Start time (HH:MM:SS)</ResponseField>
+    <ResponseField name="end_time" type="string">End time (HH:MM:SS)</ResponseField>
+    <ResponseField name="duration_minutes" type="number">Duration in minutes</ResponseField>
+    <ResponseField name="duration_label" type="string">Duration option label</ResponseField>
+    <ResponseField name="timezone" type="string">Timezone</ResponseField>
+    <ResponseField name="status" type="string">`pending` or `confirmed`</ResponseField>
+    <ResponseField name="form_data" type="object">Submitted form data</ResponseField>
+  </Expandable>
+</ResponseField>
+
+## Example
+
+```bash
+curl -X POST https://api.mind-e.co/booking/public/create \
+  -H "Content-Type: application/json" \
+  -d '{
+    "agentId": "agent-id-here",
+    "conversationId": "conv-id-here",
+    "date": "2026-03-05",
+    "time": "10:00",
+    "durationOptionId": "opt-1",
+    "formData": {
+      "name": "Jane Smith",
+      "email": "jane@example.com"
+    }
+  }'
+```
+
+### Response
+
+```json
+{
+  "success": true,
+  "booking": {
+    "id": "booking-123",
+    "booking_code": "BK-A1B2C3",
+    "booking_date": "2026-03-05",
+    "start_time": "10:00:00",
+    "end_time": "10:30:00",
+    "duration_minutes": 30,
+    "duration_label": "30-minute call",
+    "timezone": "America/New_York",
+    "status": "confirmed",
+    "form_data": {
+      "name": "Jane Smith",
+      "email": "jane@example.com"
+    }
+  }
+}
+```

@@ -1,0 +1,63 @@
+---
+title: "Create Web Source"
+description: "Add a new web source to an agent's knowledge base."
+---
+
+## Endpoint
+
+```
+POST /web-sources
+```
+
+## Authentication
+
+Required.
+
+## Request body
+
+<ParamField body="agentId" type="string" required>
+  The agent ID.
+</ParamField>
+
+<ParamField body="url" type="string" required>
+  The URL to crawl. Must be a valid HTTP or HTTPS URL.
+</ParamField>
+
+<ParamField body="mode" type="string" required>
+  Crawl mode: `crawl` (recursive), `sitemap` (discover from sitemap), or `single` (one page only).
+</ParamField>
+
+<ParamField body="maxPages" type="number">
+  Maximum number of pages to crawl. Range: 1–100. Default: `50`.
+</ParamField>
+
+<ParamField body="maxDepth" type="number">
+  Maximum crawl depth for link following. Range: 1–3. Default: `2`.
+</ParamField>
+
+## Response
+
+<ResponseField name="success" type="boolean" />
+
+<ResponseField name="webSource" type="object">
+  The created web source object (see [List Web Sources](/api-reference/web-sources/list) for the full shape).
+</ResponseField>
+
+## Limits
+
+- Maximum **10 web sources** per agent.
+
+## Example
+
+```bash
+curl -X POST https://api.mind-e.co/web-sources \
+  -H "Authorization: Bearer sk_live_your_key_here" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "agentId": "agent-id-here",
+    "url": "https://example.com/docs",
+    "mode": "crawl",
+    "maxPages": 20,
+    "maxDepth": 2
+  }'
+```

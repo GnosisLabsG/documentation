@@ -1,0 +1,77 @@
+---
+title: "API Keys"
+description: "Create and manage API keys to access the Mind-e API programmatically."
+---
+
+API keys let you interact with your agents through the [REST API](/api-reference/introduction). Use them to send chat messages, retrieve conversations, and integrate Mind-e into your own applications.
+
+## Creating an API key
+
+<Steps>
+  <Step title="Go to settings">
+    Open your [dashboard settings](https://app.mind-e.co/dashboard/settings) and find the **API Keys** section.
+  </Step>
+  <Step title="Create a key">
+    Click **Create API Key** and fill in:
+    - **Name** — a descriptive name for the key (3–50 characters), e.g., "Production Backend" or "Testing"
+    - **Agent scope** — choose **All Agents** to access any agent, or select a specific agent to restrict access
+  </Step>
+  <Step title="Copy the key">
+    Your API key is displayed once after creation. Copy it immediately — you won't be able to see the full key again.
+
+    The key format looks like:
+    ```
+    sk_live_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    ```
+  </Step>
+</Steps>
+
+<Warning>
+  Store your API key securely. Never expose it in client-side code, public repositories, or browser requests. If a key is compromised, delete it immediately and create a new one.
+</Warning>
+
+## Using an API key
+
+Include your API key in the `Authorization` header of API requests:
+
+```bash
+curl -X POST https://api.mind-e.co/chat \
+  -H "Authorization: Bearer sk_live_your_key_here" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "agentId": "your-agent-id",
+    "message": "What are your business hours?"
+  }'
+```
+
+See the [API Reference](/api-reference/introduction) for all available endpoints.
+
+## Key limits
+
+| Scope | Max keys |
+|-------|---------|
+| Per agent | 2 |
+| All Agents | 2 |
+
+## Agent scope
+
+| Scope | Behavior |
+|-------|----------|
+| **All Agents** | The key can access any agent you own. You specify the agent ID in each API request. |
+| **Specific Agent** | The key only works with the selected agent. Requests with a different agent ID are rejected. |
+
+Use agent-specific keys when you want to limit access — for example, giving a key to a third-party integration that should only access one agent.
+
+## Managing keys
+
+In the API Keys section of your settings, you can see all your keys with:
+
+- **Name** — the key's label
+- **Key prefix** — the first characters of the key (for identification)
+- **Agent scope** — which agents the key can access
+- **Last used** — when the key was last used in an API request
+- **Status** — active or inactive
+
+### Deleting a key
+
+Click the delete icon next to a key to deactivate it. The key immediately stops working for all API requests. This action cannot be undone — you'll need to create a new key if you need access again.

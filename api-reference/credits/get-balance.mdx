@@ -1,0 +1,68 @@
+---
+title: "Get Credit Balance"
+description: "Get your current credit balance and optionally include usage statistics."
+---
+
+## Endpoint
+
+```
+GET /credits
+```
+
+## Authentication
+
+Required.
+
+## Query parameters
+
+<ParamField query="includeStats" type="string">
+  Set to `"true"` to include usage statistics by feature and agent.
+</ParamField>
+
+## Response
+
+<ResponseField name="success" type="boolean" />
+
+<ResponseField name="credits" type="object">
+  <Expandable>
+    <ResponseField name="balance" type="number">Current credit balance</ResponseField>
+    <ResponseField name="lifetimeUsed" type="number">Total credits used all-time</ResponseField>
+    <ResponseField name="updatedAt" type="string">ISO 8601 timestamp of last update</ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="stats" type="object">
+  Included only when `includeStats=true`.
+  <Expandable>
+    <ResponseField name="totalUsed" type="number">Total credits used</ResponseField>
+    <ResponseField name="periodUsed" type="number">Credits used in current billing period</ResponseField>
+    <ResponseField name="byFeature" type="object">Breakdown by feature (chat, tts, etc.)</ResponseField>
+    <ResponseField name="byAgent" type="object">Breakdown by agent ID</ResponseField>
+  </Expandable>
+</ResponseField>
+
+## Example
+
+```bash
+curl "https://api.mind-e.co/credits?includeStats=true" \
+  -H "Authorization: Bearer sk_live_your_key_here"
+```
+
+### Response
+
+```json
+{
+  "success": true,
+  "credits": {
+    "balance": 8450,
+    "lifetimeUsed": 1550,
+    "updatedAt": "2026-02-28T15:00:00Z"
+  },
+  "stats": {
+    "totalUsed": 1550,
+    "periodUsed": 350,
+    "byFeature": { "chat": 1200, "tts": 250, "scenario_trigger": 100 },
+    "byAgent": { "agent-1": 900, "agent-2": 650 }
+  }
+}
+```

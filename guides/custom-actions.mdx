@@ -1,0 +1,100 @@
+---
+title: "Custom Actions"
+description: "Add custom buttons and forms to your agent's responses to collect data or direct users to external links."
+---
+
+Custom actions extend your agent beyond question-answering. You can add clickable buttons that link to URLs and forms that collect user data — both triggered intelligently by the AI during conversations.
+
+## Action types
+
+Mind-e supports three action types:
+
+| Type | Purpose |
+|------|---------|
+| **Custom button** | Displays a clickable button that links to a URL |
+| **Custom form** | Shows a multi-field form to collect structured data |
+| **Booking** | Opens the booking interface — see [Booking & Appointments](/guides/booking) |
+
+## Custom buttons
+
+A custom button adds a clickable link in the agent's response. Use it to direct users to a page, resource, or external tool.
+
+### Configuration
+
+| Field | Description |
+|-------|-------------|
+| Action name | Internal identifier used by the AI (e.g., `contact_us`) |
+| When to use | Natural language instructions for when the AI should show this button (e.g., "when the user asks about contacting support") |
+| Button text | The text displayed on the button |
+| URL | The link the button opens |
+
+### Example
+
+If you create a button with:
+- **Action name:** `pricing_page`
+- **When to use:** "when the user asks about pricing or plans"
+- **Button text:** "View Pricing"
+- **URL:** `https://mind-e.co/pricing`
+
+The AI will show a "View Pricing" button whenever a user asks about pricing.
+
+## Custom forms
+
+A custom form collects structured information from users during a conversation. The AI triggers the form based on your instructions.
+
+### Configuration
+
+| Field | Description |
+|-------|-------------|
+| Action name | Internal identifier (e.g., `lead_form`) |
+| When to use | Instructions for when the AI should show the form |
+| Form title | Heading displayed above the form (optional) |
+| Submit button text | Label for the submit button (default: "Submit") |
+| Form fields | The fields to collect — see below |
+
+### Form field types
+
+| Type | Description |
+|------|-------------|
+| **Text** | Single-line text input |
+| **Email** | Email input with validation |
+| **Phone** | Phone number input |
+| **Textarea** | Multi-line text input for longer responses |
+| **File upload** | File upload supporting: PDF, DOCX, XLSX, PPTX, PNG, JPG, TXT |
+
+Each field has:
+- **Label** — displayed above the field
+- **Placeholder** — hint text inside the field (optional)
+- **Required** — whether the user must fill it in
+
+### Example
+
+A lead collection form might have:
+- Name (text, required)
+- Email (email, required)
+- Phone (phone, optional)
+- Message (textarea, optional)
+
+## How the AI decides when to trigger actions
+
+Actions are triggered by the AI based on the **"When to use"** instructions you write. Write clear, specific descriptions:
+
+**Good:**
+```
+Use this when the user wants to speak with a human agent or asks
+for live support.
+```
+
+**Too vague:**
+```
+Use this sometimes.
+```
+
+The AI evaluates each user message against your action descriptions and triggers the appropriate action when it matches.
+
+## Viewing submissions
+
+Form submissions are saved and visible in your agent's dashboard. Each submission includes:
+- The form data
+- The conversation it came from
+- Timestamps

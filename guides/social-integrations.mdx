@@ -1,0 +1,169 @@
+---
+title: "Social Media Integrations"
+description: "Connect your AI agent to Instagram, WhatsApp, Telegram, and Messenger to respond to messages automatically."
+---
+
+Connect your agent to social media platforms so it can automatically respond to incoming messages. Your agent uses its knowledge base and settings to reply, just like it does in the chat widget.
+
+<Note>
+  Social media integrations require a **paid plan** (Starter or above). See [Plans & Pricing](/account/plans-and-pricing).
+</Note>
+
+## Instagram
+
+Connect your agent to respond to Instagram Direct Messages.
+
+### Requirements
+
+- An Instagram Business or Creator account
+- A Facebook Page connected to your Instagram account
+- A Meta Developer App with Instagram Messaging permissions
+
+### Connection
+
+<Steps>
+  <Step title="Get credentials">
+    From your Meta Developer App, obtain:
+    - **Page Access Token** — a long-lived token for your Facebook Page
+    - **Instagram Account ID** — your Instagram business account ID
+  </Step>
+  <Step title="Connect in Mind-e">
+    Go to your agent's **Integration** tab, find Instagram, and enter the credentials. Click **Connect**.
+  </Step>
+  <Step title="Configure webhook">
+    Set up the webhook URL in your Meta Developer App:
+    ```
+    https://api.mind-e.co/instagram/webhook/your-agent-id
+    ```
+    Use the verify token shown in Mind-e during setup.
+  </Step>
+</Steps>
+
+### Supported features
+
+- Text messages
+- Audio messages (automatically transcribed to text)
+- Image messages (analyzed with AI vision)
+- Story mention detection
+
+---
+
+## WhatsApp
+
+Connect your agent to respond to WhatsApp messages through the WhatsApp Business API.
+
+### Requirements
+
+- A WhatsApp Business account
+- A Meta Developer App with WhatsApp permissions
+- A registered WhatsApp phone number
+
+### Connection
+
+<Steps>
+  <Step title="Get credentials">
+    From your Meta Developer App, obtain:
+    - **Access Token** — WhatsApp API access token
+    - **Phone Number ID** — your WhatsApp phone number ID
+    - **Business Account ID** — your WhatsApp Business Account ID
+  </Step>
+  <Step title="Connect in Mind-e">
+    Go to your agent's **Integration** tab, find WhatsApp, and enter the credentials. Click **Connect**.
+  </Step>
+  <Step title="Configure webhook">
+    Set up the webhook URL in your Meta Developer App:
+    ```
+    https://api.mind-e.co/whatsapp/webhook/your-agent-id
+    ```
+    Use the verify token shown in Mind-e during setup.
+  </Step>
+</Steps>
+
+---
+
+## Telegram
+
+Connect your agent as a Telegram bot.
+
+### Requirements
+
+- A Telegram bot created through [@BotFather](https://t.me/BotFather)
+
+### Connection
+
+<Steps>
+  <Step title="Create a bot">
+    Message [@BotFather](https://t.me/BotFather) on Telegram and use the `/newbot` command to create a bot. You'll receive a **bot token** (format: `123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11`).
+  </Step>
+  <Step title="Connect in Mind-e">
+    Go to your agent's **Integration** tab, find Telegram, and enter the bot token. Click **Connect**.
+
+    Mind-e automatically registers the webhook with Telegram — no manual webhook setup needed.
+  </Step>
+</Steps>
+
+### Supported features
+
+- Text messages
+- Bot commands
+- Typing indicators
+
+<Tip>
+  Telegram is the easiest integration to set up — you only need a bot token from BotFather.
+</Tip>
+
+---
+
+## Messenger
+
+Connect your agent to respond to Facebook Messenger messages.
+
+### Requirements
+
+- A Facebook Page
+- A Meta Developer App with Messenger permissions
+
+### Connection
+
+<Steps>
+  <Step title="Get credentials">
+    From your Meta Developer App, obtain:
+    - **Page Access Token** — a long-lived token for your Facebook Page
+    - **Page ID** — your Facebook Page ID
+  </Step>
+  <Step title="Connect in Mind-e">
+    Go to your agent's **Integration** tab, find Messenger, and enter the credentials. Click **Connect**.
+  </Step>
+  <Step title="Configure webhook">
+    Set up the webhook URL in your Meta Developer App:
+    ```
+    https://api.mind-e.co/messenger/webhook/your-agent-id
+    ```
+    Use the verify token shown in Mind-e during setup.
+  </Step>
+</Steps>
+
+---
+
+## Common information
+
+### Message flow
+
+For all platforms, messages flow like this:
+
+1. A user sends a message on the platform
+2. The platform sends a webhook to Mind-e
+3. Mind-e processes the message through your agent (same RAG pipeline as the chat widget)
+4. The response is sent back to the user on the platform
+
+### Conversation tracking
+
+All social media conversations are tracked in your agent's **Chat History** tab. You can filter by source (Instagram, WhatsApp, Telegram, Messenger) to see conversations from each platform.
+
+### Disconnecting
+
+To disconnect an integration, go to the **Integration** tab and click **Disconnect** next to the platform. This stops the agent from responding to messages on that platform. You can reconnect at any time.
+
+### Rate limiting
+
+Each social media integration has rate limits to prevent abuse. If your agent receives a high volume of messages, some may be delayed or rate-limited.

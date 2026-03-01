@@ -1,0 +1,70 @@
+---
+title: "Check Limits"
+description: "Check whether you can create a new agent or upload more storage."
+---
+
+## Endpoint
+
+```
+POST /subscriptions/limits
+```
+
+## Authentication
+
+Required.
+
+## Request body
+
+<ParamField body="check" type="string" required>
+  What to check: `agent` (can you create another agent?) or `storage` (can you upload more data?).
+</ParamField>
+
+<ParamField body="bytes" type="number">
+  Required when `check` is `storage`. The size in bytes of the content you want to upload.
+</ParamField>
+
+## Response
+
+<ResponseField name="success" type="boolean" />
+
+<ResponseField name="check" type="string">
+  The check type (`agent` or `storage`).
+</ResponseField>
+
+<ResponseField name="allowed" type="boolean">
+  Whether the action is allowed within your current plan limits.
+</ResponseField>
+
+<ResponseField name="currentUsage" type="number">
+  Current usage (agent count or storage bytes).
+</ResponseField>
+
+<ResponseField name="limit" type="number">
+  Plan limit (max agents or max storage bytes).
+</ResponseField>
+
+<ResponseField name="remaining" type="number">
+  Remaining capacity.
+</ResponseField>
+
+## Example
+
+```bash
+curl -X POST https://api.mind-e.co/subscriptions/limits \
+  -H "Authorization: Bearer sk_live_your_key_here" \
+  -H "Content-Type: application/json" \
+  -d '{ "check": "agent" }'
+```
+
+### Response
+
+```json
+{
+  "success": true,
+  "check": "agent",
+  "allowed": true,
+  "currentUsage": 3,
+  "limit": 10,
+  "remaining": 7
+}
+```

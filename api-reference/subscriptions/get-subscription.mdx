@@ -1,0 +1,86 @@
+---
+title: "Get Subscription"
+description: "Get your current subscription details, plan information, and usage."
+---
+
+## Endpoint
+
+```
+GET /subscriptions
+```
+
+## Authentication
+
+Required.
+
+## Response
+
+<ResponseField name="success" type="boolean" />
+
+<ResponseField name="subscription" type="object">
+  <Expandable>
+    <ResponseField name="id" type="string">Subscription ID</ResponseField>
+    <ResponseField name="planId" type="string">Current plan ID</ResponseField>
+    <ResponseField name="status" type="string">`active`, `past_due`, `cancelled`, or `paused`</ResponseField>
+    <ResponseField name="currentPeriodStart" type="string">Billing period start (ISO 8601)</ResponseField>
+    <ResponseField name="currentPeriodEnd" type="string">Billing period end (ISO 8601)</ResponseField>
+    <ResponseField name="cancelAtPeriodEnd" type="boolean">Whether cancellation is scheduled</ResponseField>
+    <ResponseField name="billingInterval" type="string">`monthly`, `yearly`, or null</ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="plan" type="object">
+  Plan details including name and feature configuration.
+</ResponseField>
+
+<ResponseField name="usage" type="object">
+  Current usage against plan limits.
+  <Expandable>
+    <ResponseField name="agents" type="object">`used`, `limit`, `remaining`, `percentage`, `isAtLimit`</ResponseField>
+    <ResponseField name="storage" type="object">`usedBytes`, `limitBytes`, `remainingBytes`, `percentage`, `isAtLimit`, `isOverLimit`</ResponseField>
+    <ResponseField name="credits" type="object">`balance`, `perCycle`</ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="flags" type="object">
+  <Expandable>
+    <ResponseField name="isFreePlan" type="boolean">Whether on the free plan</ResponseField>
+    <ResponseField name="isPaidPlan" type="boolean">Whether on a paid plan</ResponseField>
+    <ResponseField name="canUpgrade" type="boolean">Whether upgrade is available</ResponseField>
+    <ResponseField name="needsUpgrade" type="boolean">Whether usage limits are exceeded</ResponseField>
+  </Expandable>
+</ResponseField>
+
+## Example
+
+```bash
+curl "https://api.mind-e.co/subscriptions" \
+  -H "Authorization: Bearer sk_live_your_key_here"
+```
+
+### Response
+
+```json
+{
+  "success": true,
+  "subscription": {
+    "planId": "pro",
+    "status": "active",
+    "currentPeriodStart": "2026-02-01T00:00:00Z",
+    "currentPeriodEnd": "2026-03-01T00:00:00Z",
+    "cancelAtPeriodEnd": false,
+    "billingInterval": "monthly"
+  },
+  "usage": {
+    "agents": { "used": 3, "limit": 10, "remaining": 7, "percentage": 30, "isAtLimit": false },
+    "storage": { "usedBytes": 52428800, "limitBytes": 209715200, "remainingBytes": 157286400, "percentage": 25, "isAtLimit": false, "isOverLimit": false },
+    "credits": { "balance": 8500, "perCycle": 10000 }
+  },
+  "flags": {
+    "isFreePlan": false,
+    "isPaidPlan": true,
+    "canUpgrade": true,
+    "needsUpgrade": false
+  }
+}
+```

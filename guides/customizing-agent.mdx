@@ -1,0 +1,89 @@
+---
+title: "Customizing Agent Behavior"
+description: "Fine-tune your agent's responses with system prompts, model selection, temperature, and query expansion."
+---
+
+After creating an agent, you can adjust its behavior through the **Settings** tab. These settings control how your agent interprets questions and generates responses.
+
+## System prompt
+
+The system prompt is the most important setting. It tells the agent who it is, how to behave, and what rules to follow.
+
+### Writing a good system prompt
+
+- **Define the role** — tell the agent who it is and what it does
+- **Set boundaries** — specify what the agent should and shouldn't do
+- **Define the tone** — formal, friendly, concise, detailed
+- **Add rules** — specific instructions for handling edge cases
+
+**Example for customer support:**
+
+```text
+You are a customer support assistant for Acme Corp. Your role is to help
+customers with questions about our products and services.
+
+Rules:
+- Answer based on the provided context only
+- If you don't know the answer, say "I don't have that information" and
+  suggest contacting support@acme.com
+- Be friendly and concise
+- Never make up product features or pricing
+- For billing issues, always direct the user to the billing team
+```
+
+**Example for education:**
+
+```text
+You are a study assistant for an introductory biology course. Help students
+understand concepts from the course materials.
+
+Rules:
+- Explain concepts in simple terms with examples
+- When citing from course materials, reference the source
+- Encourage students to think critically rather than giving direct answers
+- If a question is outside the course scope, let the student know
+```
+
+<Tip>
+  Start simple and iterate. Test your agent in the playground, see where it falls short, and refine the prompt.
+</Tip>
+
+## Model selection
+
+Choose the AI model your agent uses. Different models have different capabilities and [credit costs](/core-concepts#credits):
+
+| Tier | Models | Credits/message | Best for |
+|------|--------|----------------|----------|
+| Mini | GPT-4o Mini, Gemini Flash, Claude Haiku | 1 | High-volume, simple queries |
+| Standard | GPT-4o, GPT-4.1, Gemini Pro, Claude Sonnet, Grok 2 | 2 | General-purpose (recommended) |
+| Premium | GPT-5.2, Claude Opus, Grok 3 | 3 | Complex reasoning, detailed answers |
+
+GPT-4o (standard tier) is the default and offers a good balance of quality and cost for most use cases.
+
+## Temperature
+
+Temperature controls how creative or consistent the agent's responses are. The range is 0.0 to 2.0.
+
+- **Low (0.0–0.5)** — more consistent, factual, predictable. Good for support bots and factual Q&A.
+- **Medium (0.5–1.0)** — balanced. Good for general-purpose agents. The default is **0.7**.
+- **High (1.0–2.0)** — more creative, varied, unpredictable. Good for brainstorming or creative writing.
+
+<Note>
+  Some models have a fixed temperature that cannot be adjusted. The setting will appear locked for these models.
+</Note>
+
+## Query expansion
+
+When enabled, Mind-e automatically expands short or vague user queries with additional keywords before searching the knowledge base. This improves retrieval quality for brief questions.
+
+**Example:** A user asks "pricing" → the system expands it to something like "pricing plans costs subscription tiers features" before searching.
+
+Query expansion is enabled by default. You can toggle it in the agent settings. It costs an additional **2 credits** per message when it triggers.
+
+<Tip>
+  Keep query expansion enabled if your users tend to ask short questions. Disable it if your users write detailed queries or if you want to save credits.
+</Tip>
+
+## Saving changes
+
+After adjusting any settings, click **Save** to apply the changes. Settings take effect immediately for new conversations.

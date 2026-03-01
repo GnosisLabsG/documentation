@@ -1,0 +1,48 @@
+---
+title: "Update Web Source"
+description: "Update a web source's discovered URLs."
+---
+
+## Endpoint
+
+```
+PATCH /web-sources/{id}
+```
+
+## Authentication
+
+Required.
+
+## Path parameters
+
+<ParamField path="id" type="string" required>
+  The web source ID.
+</ParamField>
+
+## Request body
+
+<ParamField body="discoveredUrls" type="array" required>
+  Updated list of discovered URLs. Each item must have a `url` field.
+</ParamField>
+
+## Response
+
+<ResponseField name="success" type="boolean" />
+
+<ResponseField name="webSource" type="object">
+  The updated web source object.
+</ResponseField>
+
+## Example
+
+```bash
+curl -X PATCH https://api.mind-e.co/web-sources/ws-id-here \
+  -H "Authorization: Bearer sk_live_your_key_here" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "discoveredUrls": [
+      { "url": "https://example.com/page-1" },
+      { "url": "https://example.com/page-2" }
+    ]
+  }'
+```

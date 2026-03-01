@@ -1,0 +1,108 @@
+---
+title: "Limits & Supported Formats"
+description: "File types, size limits, rate limits, and plan-specific limits for Mind-e."
+---
+
+## Supported file types
+
+| Format | Extension | Max file size | Max content |
+|--------|-----------|--------------|-------------|
+| PDF | `.pdf` | 50 MB | 500 pages |
+| Word | `.docx` | 50 MB | 300 pages |
+| Text | `.txt` | 10 MB | 5,000,000 characters |
+| Markdown | `.md` | 10 MB | 5,000,000 characters |
+
+### Chat image uploads
+
+| Property | Limit |
+|----------|-------|
+| Max images per message | 4 |
+| Max file size per image | 20 MB |
+| Supported formats | JPEG, PNG, GIF, WebP, BMP, TIFF |
+
+### Booking form file uploads
+
+Supported types: PDF, DOCX, XLSX, PPTX, PNG, JPG, TXT
+
+## Plan limits
+
+| Resource | Free | Starter | Pro | Business |
+|----------|------|---------|-----|----------|
+| AI agents | 1 | 5 | 10 | 25 |
+| Total storage | 10 MB | 50 MB | 200 MB | 1 GB |
+| Credits/month | 0 | 2,000 | 10,000 | 40,000 |
+| Social integrations | No | Yes | Yes | Yes |
+| API access | No | No | No | Yes |
+
+## Agent limits
+
+| Resource | Limit |
+|----------|-------|
+| Storage per agent | 50 MB |
+| Web sources per agent | 10 |
+| API keys per agent | 2 |
+| API keys (all agents) | 2 |
+
+## Content limits
+
+| Field | Limit |
+|-------|-------|
+| Agent name | 50 characters |
+| Agent description | 200 characters |
+| System prompt | 10–4,000 characters |
+| API key name | 3–50 characters |
+
+## Credit costs
+
+### Chat messages
+
+| Model tier | Credits | Models |
+|-----------|---------|--------|
+| Mini | 1 | GPT-4o Mini, GPT-4.1 Nano, GPT-5 Nano, GPT-5 Mini, Gemini 1.5 Flash, Claude 3.5 Haiku |
+| Standard | 2 | GPT-4o, GPT-4.1, GPT-4.1 Mini, GPT-5, GPT-5.1, Gemini 2.0 Flash/Pro, Gemini 1.5 Pro, Claude 4 Sonnet, Claude 3.5 Sonnet, Grok 3 Mini, Grok 2 |
+| Premium | 3 | GPT-5.2, Claude 4 Opus, Grok 3 |
+
+### Add-ons
+
+| Add-on | Credits |
+|--------|---------|
+| Image input | +3 per message |
+| Query expansion | +2 when triggered |
+| Long response (>2,000 tokens) | +1 |
+| Scenario trigger | +1 |
+
+### Text-to-speech
+
+| Length | Credits |
+|--------|---------|
+| Short (up to 800 characters) | 1 |
+| Medium (800–2,000 characters) | 2 |
+| Long (over 2,000 characters) | 3 |
+
+## Account limits
+
+| Field | Limit |
+|-------|-------|
+| First name | 2–50 characters |
+| Last name | 2–50 characters |
+| Avatar file size | 5 MB |
+| Avatar formats | JPEG, PNG, WebP |
+| Password length | 4–20 characters |
+
+## Scenario validation
+
+| Rule | Requirement |
+|------|-------------|
+| Start nodes | Exactly 1 |
+| End nodes | At least 1 |
+| Keyword trigger | At least 1 keyword |
+| Choice question | At least 2 options |
+| Form node | At least 1 field |
+
+## Booking limits
+
+| Rule | Configurable |
+|------|-------------|
+| Slot interval | 15, 30, or 60 minutes |
+| Max crawl depth | 1–3 levels |
+| Max crawl pages | 1–100 pages |

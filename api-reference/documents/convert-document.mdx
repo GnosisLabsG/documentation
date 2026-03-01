@@ -1,0 +1,66 @@
+---
+title: "Convert Document"
+description: "Start processing an uploaded document — converts, chunks, and generates embeddings."
+---
+
+Initiate document processing for an uploaded file. The document goes through conversion (PDF/DOCX to markdown), chunking, and embedding generation.
+
+## Endpoint
+
+```
+POST /convert-document
+```
+
+## Authentication
+
+Required.
+
+## Request body
+
+<ParamField body="agentId" type="string" required>
+  The agent ID the document belongs to.
+</ParamField>
+
+<ParamField body="documentId" type="string" required>
+  The document ID to process.
+</ParamField>
+
+## Response
+
+<ResponseField name="success" type="boolean">
+  Whether processing was initiated.
+</ResponseField>
+
+<ResponseField name="callId" type="string">
+  Processing job ID for status polling.
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  Status message.
+</ResponseField>
+
+## Example
+
+```bash
+curl -X POST https://api.mind-e.co/convert-document \
+  -H "Authorization: Bearer sk_live_your_key_here" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "agentId": "agent-id-here",
+    "documentId": "doc-id-here"
+  }'
+```
+
+### Response
+
+```json
+{
+  "success": true,
+  "callId": "call-abc123",
+  "message": "Document processing started"
+}
+```
+
+<Note>
+  Document processing is asynchronous. Use [Conversion Status](/api-reference/documents/conversion-status) to check progress. Processing typically takes 10–60 seconds depending on document size.
+</Note>

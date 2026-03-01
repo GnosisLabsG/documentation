@@ -1,0 +1,90 @@
+---
+title: "Creating an Agent"
+description: "Step-by-step guide to creating your first AI agent on Mind-e."
+---
+
+An agent is your custom AI assistant — it has its own name, personality, knowledge base, and configuration. This guide walks you through creating one.
+
+## Prerequisites
+
+- A Mind-e account — [sign up here](https://app.mind-e.co/auth/signup) if you haven't already
+
+## Create an agent
+
+<Steps>
+  <Step title="Open the dashboard">
+    Go to [app.mind-e.co/dashboard](https://app.mind-e.co/dashboard) and click **My Agents** in the sidebar, then click **Create Agent**.
+  </Step>
+
+  <Step title="Fill in basic information">
+    - **Agent name** — a descriptive name for your agent (max 50 characters)
+    - **Agent description** — a short summary of what your agent does (max 200 characters)
+    - **Category** — choose one:
+      - **Content** — for content-related assistants
+      - **Support** — for customer support bots
+      - **Education** — for learning and teaching assistants
+      - **Custom** — for anything else
+  </Step>
+
+  <Step title="Configure the AI">
+    - **System prompt** — instructions that define how your agent behaves. This is the most important setting. Write clear instructions about the agent's role, tone, and rules. (10–4,000 characters)
+
+      ```text
+      You are a friendly customer support assistant for Acme Corp.
+      Answer questions based on the provided context. Be concise
+      and helpful. If you don't know the answer, say so and suggest
+      contacting support@acme.com.
+      ```
+
+    - **AI model** — the language model your agent uses. GPT-4o is the default and works well for most use cases. Different models have different [credit costs](/core-concepts#credits).
+
+    - **Temperature** — controls how creative or consistent the responses are:
+      | Value | Label | Best for |
+      |-------|-------|----------|
+      | 0.3 | Very Reserved | Factual, precise answers |
+      | 0.5 | Reserved | Consistent support responses |
+      | 0.7 | Balanced | General-purpose (default) |
+      | 1.0 | Creative | Engaging, varied responses |
+      | 1.5 | Very Creative | Brainstorming, creative writing |
+
+  </Step>
+
+  <Step title="Set up appearance (optional)">
+    You can customize how your agent looks in the chat widget:
+    - **Welcome title** — the greeting shown when the chat opens
+    - **Welcome subtitle** — secondary text below the title
+    - **Colors** — primary color and user message color (solid or gradient)
+    - **Font** — choose from available font families
+    - **Avatars** — upload profile and chat avatars
+
+    You can also configure appearance later — see [Chat Appearance](/guides/chat-appearance).
+  </Step>
+
+  <Step title="Create the agent">
+    Click **Create** to finish. Your agent is now ready — but it doesn't have any knowledge yet. The next step is to [add content to its knowledge base](/guides/knowledge-base).
+  </Step>
+</Steps>
+
+## Agent limits by plan
+
+The number of agents you can create depends on your plan:
+
+| Plan | Max agents |
+|------|-----------|
+| Free | 1 |
+| Starter | 5 |
+| Pro | 10 |
+| Business | 25 |
+
+See [Plans & Pricing](/account/plans-and-pricing) for full plan details.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Add knowledge" icon="book" href="/guides/knowledge-base">
+    Upload documents, add web sources, or create text snippets.
+  </Card>
+  <Card title="Customize behavior" icon="sliders" href="/guides/customizing-agent">
+    Fine-tune system prompt, model, and temperature settings.
+  </Card>
+</CardGroup>

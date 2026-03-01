@@ -1,0 +1,76 @@
+---
+title: "Get Chat Appearance"
+description: "Retrieve the chat widget appearance configuration for an agent."
+---
+
+Get the appearance settings for an agent's chat widget, including colors, fonts, avatars, and feature toggles.
+
+## Endpoint
+
+```
+GET /chat/public/appearance
+```
+
+## Authentication
+
+None required (public endpoint).
+
+## Query parameters
+
+<ParamField query="agentId" type="string" required>
+  The agent ID.
+</ParamField>
+
+## Response
+
+<ResponseField name="success" type="boolean">
+  Whether the request was successful.
+</ResponseField>
+
+<ResponseField name="appearance" type="object">
+  Chat appearance configuration.
+  <Expandable>
+    <ResponseField name="welcomeTitle" type="string">Welcome greeting text</ResponseField>
+    <ResponseField name="welcomeSubtitle" type="string">Secondary welcome text</ResponseField>
+    <ResponseField name="inputPlaceholder" type="string">Placeholder text in the message input</ResponseField>
+    <ResponseField name="primaryColor" type="string">Primary color (hex)</ResponseField>
+    <ResponseField name="userMessageColor" type="string">User message background color (hex)</ResponseField>
+    <ResponseField name="fontFamily" type="string">Font family name</ResponseField>
+    <ResponseField name="chatDirection" type="string">`ltr` or `rtl`</ResponseField>
+    <ResponseField name="widgetPosition" type="string">`bottom-right` or `bottom-left`</ResponseField>
+    <ResponseField name="profileAvatarUrl" type="string">Signed URL for profile avatar (or null)</ResponseField>
+    <ResponseField name="chatAvatarUrl" type="string">Signed URL for chat avatar (or null)</ResponseField>
+    <ResponseField name="bubbleIconUrl" type="string">Signed URL for widget bubble icon (or null)</ResponseField>
+    <ResponseField name="enableAudio" type="boolean">Whether TTS is enabled</ResponseField>
+    <ResponseField name="enableImages" type="boolean">Whether image upload is enabled</ResponseField>
+  </Expandable>
+</ResponseField>
+
+## Example
+
+```bash
+curl "https://api.mind-e.co/chat/public/appearance?agentId=agent-id-here"
+```
+
+### Response
+
+```json
+{
+  "success": true,
+  "appearance": {
+    "welcomeTitle": "Hi! How can I help you today?",
+    "welcomeSubtitle": "Ask me anything!",
+    "inputPlaceholder": "Type your message...",
+    "primaryColor": "#6f42c1",
+    "userMessageColor": "#6f42c1",
+    "fontFamily": "Poppins",
+    "chatDirection": "ltr",
+    "widgetPosition": "bottom-right",
+    "profileAvatarUrl": null,
+    "chatAvatarUrl": null,
+    "bubbleIconUrl": null,
+    "enableAudio": true,
+    "enableImages": false
+  }
+}
+```

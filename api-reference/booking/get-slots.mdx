@@ -1,0 +1,71 @@
+---
+title: "Get Available Slots"
+description: "Get available time slots for a specific date."
+---
+
+## Endpoint
+
+```
+GET /booking/public/slots
+```
+
+## Authentication
+
+None required (public endpoint).
+
+## Query parameters
+
+<ParamField query="agentId" type="string" required>
+  The agent ID.
+</ParamField>
+
+<ParamField query="date" type="string" required>
+  Date to check, format: `YYYY-MM-DD`.
+</ParamField>
+
+<ParamField query="durationMinutes" type="number" required>
+  Duration in minutes for the appointment.
+</ParamField>
+
+## Response
+
+<ResponseField name="success" type="boolean" />
+
+<ResponseField name="date" type="string">The requested date.</ResponseField>
+
+<ResponseField name="timezone" type="string">Agent's configured timezone.</ResponseField>
+
+<ResponseField name="duration" type="object">
+  Selected duration option: `id`, `label`, `duration_minutes`.
+</ResponseField>
+
+<ResponseField name="slots" type="array">
+  <Expandable>
+    <ResponseField name="time" type="string">Time slot in HH:MM format</ResponseField>
+    <ResponseField name="available" type="boolean">Whether the slot is available</ResponseField>
+  </Expandable>
+</ResponseField>
+
+## Example
+
+```bash
+curl "https://api.mind-e.co/booking/public/slots?agentId=agent-id-here&date=2026-03-02&durationMinutes=30"
+```
+
+### Response
+
+```json
+{
+  "success": true,
+  "date": "2026-03-02",
+  "timezone": "America/New_York",
+  "duration": { "id": "opt-1", "label": "30-minute call", "duration_minutes": 30 },
+  "slots": [
+    { "time": "09:00", "available": true },
+    { "time": "09:30", "available": true },
+    { "time": "10:00", "available": false },
+    { "time": "10:30", "available": true },
+    { "time": "11:00", "available": true }
+  ]
+}
+```

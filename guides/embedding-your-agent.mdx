@@ -1,0 +1,95 @@
+---
+title: "Embedding Your Agent"
+description: "Add your AI agent to your website using a chat widget, iframe, or direct link."
+---
+
+Once your agent is set up with a knowledge base, you can deploy it for your users. There are three ways to make your agent available.
+
+## Chat widget (recommended)
+
+The chat widget adds a floating chat bubble to your website. When clicked, it opens a chat window where visitors can interact with your agent.
+
+### Installation
+
+Add this code before the closing `</body>` tag on your website:
+
+```html
+<script>
+  window.mindeConfig = {
+    agentId: 'your-agent-id'
+  };
+</script>
+<script src="https://widget.mind-e.co/widget.js" defer></script>
+```
+
+<Note>
+  Replace `your-agent-id` with your actual agent ID. You can find it in the **Integration** tab of your agent's dashboard.
+</Note>
+
+### Widget features
+
+- Floating chat bubble (bottom-right or bottom-left)
+- Streaming responses in real-time
+- Image upload support (up to 4 images per message, 10 MB each)
+- Text-to-speech audio playback
+- Source attribution for answers
+- Scenario and action support
+- Customizable appearance — see [Chat Appearance](/guides/chat-appearance)
+- RTL language support
+
+### Widget position
+
+By default, the widget appears in the bottom-right corner. You can change this to bottom-left in the [chat appearance settings](/guides/chat-appearance).
+
+## Iframe embed
+
+Embed the chat directly into a page as an inline element:
+
+```html
+<iframe
+  src="https://mind-e.co/chat/your-agent-id"
+  width="100%"
+  height="600px"
+  frameborder="0"
+  style="border: none; border-radius: 12px;"
+  title="Chat">
+</iframe>
+```
+
+This is useful when you want the chat to be part of the page layout rather than a floating widget — for example, on a dedicated support page.
+
+## Direct link
+
+Share the public chat URL directly with users:
+
+```
+https://mind-e.co/chat/your-agent-id
+```
+
+This opens a full-page chat interface. Useful for sharing via email, social media, or messaging apps.
+
+## Where to find your agent ID
+
+1. Go to your [dashboard](https://app.mind-e.co/dashboard)
+2. Open your agent
+3. Go to the **Integration** tab
+4. Your agent ID and ready-to-use embed codes are displayed there
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Widget doesn't appear on my site">
+    - Make sure the script is placed before the closing `</body>` tag
+    - Check that `window.mindeConfig` is set **before** the widget script loads
+    - Verify your agent ID is correct
+    - Check your browser console for errors
+  </Accordion>
+  <Accordion title="Chat is not responding">
+    - Verify your agent has content in its knowledge base
+    - Check that your agent status is **Active**
+    - Ensure you have available [credits](/account/credits)
+  </Accordion>
+  <Accordion title="Iframe is blocked">
+    Some websites block iframes from external domains. If the iframe doesn't load, use the chat widget (script tag) instead, or check your site's Content Security Policy.
+  </Accordion>
+</AccordionGroup>

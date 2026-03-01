@@ -1,0 +1,157 @@
+---
+title: "Send Message"
+description: "Send a chat message to an agent and receive an AI-generated response."
+---
+
+Send a message to an AI agent and receive a response grounded in the agent's knowledge base.
+
+## Endpoint
+
+```
+POST /chat
+```
+
+## Authentication
+
+Bearer token (API key) required.
+
+## Request body
+
+<ParamField body="agentId" type="string" required>
+  The ID of the agent to chat with.
+</ParamField>
+
+<ParamField body="message" type="string" required>
+  The user's message.
+</ParamField>
+
+<ParamField body="conversationId" type="string">
+  ID of an existing conversation to continue. Omit to start a new conversation.
+</ParamField>
+
+<ParamField body="images" type="array">
+  Array of image objects to include with the message (max 4 images). Each image requires `storage_path` and `content_type`. Upload images first using the [Upload Image](/api-reference/chat/upload-image) endpoint.
+</ParamField>
+
+## Response
+
+<ResponseField name="success" type="boolean">
+  Whether the request was successful.
+</ResponseField>
+
+<ResponseField name="response" type="string">
+  The agent's response text.
+</ResponseField>
+
+<ResponseField name="sources" type="array">
+  Documents referenced in the response.
+  <Expandable>
+    <ResponseField name="id" type="string">Source ID</ResponseField>
+    <ResponseField name="documentId" type="string">Document ID</ResponseField>
+    <ResponseField name="documentName" type="string">Document file name</ResponseField>
+    <ResponseField name="text" type="string">Relevant text excerpt (first 200 characters)</ResponseField>
+    <ResponseField name="score" type="number">Relevance score</ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="conversationId" type="string">
+  The conversation ID. Use this to continue the conversation in subsequent requests.
+</ResponseField>
+
+<ResponseField name="agent" type="object">
+  Agent information.
+  <Expandable>
+    <ResponseField name="id" type="string">Agent ID</ResponseField>
+    <ResponseField name="name" type="string">Agent name</ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="credits" type="object">
+  Credit usage for this request.
+  <Expandable>
+    <ResponseField name="used" type="number">Total credits consumed</ResponseField>
+    <ResponseField name="breakdown" type="object">
+      Breakdown of credit costs: `base`, `image_input`, `query_expansion`, `long_answer`, `total`
+    </ResponseField>
+    <ResponseField name="newBalance" type="number">Remaining credit balance</ResponseField>
+  </Expandable>
+</ResponseField>
+
+## Example
+
+<CodeGroup>
+```bash cURL
+curl -X POST https://api.mind-e.co/chat \
+  -H "Authorization: Bearer sk_live_your_key_here" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "agentId": "agent-id-here",
+    "message": "What are your business hours?"
+  }'
+```
+
+```javascript JavaScript
+const response = await fetch('https://api.mind-e.co/chat', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer sk_live_your_key_here',
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    agentId: 'agent-id-here',
+    message: 'What are your business hours?',
+  }),
+});
+
+const data = await response.json();
+console.log(data.response);
+```
+</CodeGroup>
+
+### Response
+
+```json
+{
+  "success": true,
+  "response": "Our business hours are Monday through Friday, 9:00 AM to 5:00 PM EST.",
+  "sources": [
+    {
+      "id": "src-123",
+      "documentId": "doc-456",
+      "documentName": "company-info.pdf",
+      "text": "Business hours: Monday-Friday, 9 AM - 5 PM...",
+      "score": 0.92
+    }
+  ],
+  "conversationId": "conv-789",
+  "agent": {
+    "id": "agent-id-here",
+    "name": "Support Bot"
+  },
+  "credits": {
+    "used": 2,
+    "breakdown": {
+      "base": 2,
+      "image_input": 0,
+      "query_expansion": 0,
+      "long_answer": 0,
+      "total": 2
+    },
+    "newBalance": 1998
+  }
+}
+```
+
+## Continuing a conversation
+
+To continue an existing conversation, pass the `conversationId` from a previous response:
+
+```json
+{
+  "agentId": "agent-id-here",
+  "message": "Are you open on weekends?",
+  "conversationId": "conv-789"
+}
+```
+
+The agent will have access to the previous messages in the conversation for context.

@@ -1,0 +1,72 @@
+---
+title: "Get Booking Config"
+description: "Get the booking configuration for an agent — duration options, form fields, and cancellation rules."
+---
+
+## Endpoint
+
+```
+GET /booking/public/config
+```
+
+## Authentication
+
+None required (public endpoint).
+
+## Query parameters
+
+<ParamField query="agentId" type="string" required>
+  The agent ID.
+</ParamField>
+
+## Response
+
+<ResponseField name="success" type="boolean" />
+
+<ResponseField name="config" type="object">
+  <Expandable>
+    <ResponseField name="booking_title" type="string">Title displayed in the booking interface</ResponseField>
+    <ResponseField name="booking_description" type="string">Description or instructions</ResponseField>
+    <ResponseField name="timezone" type="string">IANA timezone (e.g., "America/New_York")</ResponseField>
+    <ResponseField name="duration_options" type="array">
+      Available duration options, each with `id`, `label`, and `duration_minutes`.
+    </ResponseField>
+    <ResponseField name="min_notice_hours" type="number">Minimum hours before a slot can be booked</ResponseField>
+    <ResponseField name="max_advance_days" type="number">Maximum days ahead users can book</ResponseField>
+    <ResponseField name="form_fields" type="array">
+      Booking form fields, each with `id`, `type`, `label`, `required`, `inputType`, `placeholder`.
+    </ResponseField>
+    <ResponseField name="allow_user_cancellation" type="boolean">Whether users can cancel bookings</ResponseField>
+    <ResponseField name="cancellation_notice_hours" type="number">Minimum hours before appointment for cancellation</ResponseField>
+  </Expandable>
+</ResponseField>
+
+## Example
+
+```bash
+curl "https://api.mind-e.co/booking/public/config?agentId=agent-id-here"
+```
+
+### Response
+
+```json
+{
+  "success": true,
+  "config": {
+    "booking_title": "Schedule a Consultation",
+    "timezone": "America/New_York",
+    "duration_options": [
+      { "id": "opt-1", "label": "30-minute call", "duration_minutes": 30 },
+      { "id": "opt-2", "label": "60-minute deep dive", "duration_minutes": 60 }
+    ],
+    "min_notice_hours": 24,
+    "max_advance_days": 30,
+    "form_fields": [
+      { "id": "name", "type": "input_field", "label": "Name", "required": true, "inputType": "text" },
+      { "id": "email", "type": "input_field", "label": "Email", "required": true, "inputType": "email" }
+    ],
+    "allow_user_cancellation": true,
+    "cancellation_notice_hours": 12
+  }
+}
+```

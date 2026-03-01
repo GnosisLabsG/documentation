@@ -1,0 +1,103 @@
+---
+title: "Managing Your Knowledge Base"
+description: "Upload documents, add web sources, and create text snippets to train your AI agent."
+---
+
+Your agent's knowledge base is the content it uses to answer questions. You can add three types of sources: documents, web sources, and text snippets.
+
+## Documents
+
+Upload files that your agent should learn from. When you upload a document, Mind-e converts it to text, splits it into chunks, and stores embeddings for retrieval.
+
+### Supported file types
+
+| Format | Extension | Max file size | Max content |
+|--------|-----------|--------------|-------------|
+| PDF | `.pdf` | 50 MB | 500 pages |
+| Word | `.docx` | 50 MB | 300 pages |
+| Text | `.txt` | 10 MB | 5,000,000 characters |
+| Markdown | `.md` | 10 MB | 5,000,000 characters |
+
+<Note>
+  Each agent has a **50 MB total storage limit** across all sources (documents, web sources, and snippets combined). Your overall storage limit also depends on your [plan](/account/plans-and-pricing).
+</Note>
+
+### Upload a document
+
+<Steps>
+  <Step title="Open sources">
+    Go to your agent's **Sources** tab in the dashboard.
+  </Step>
+  <Step title="Upload">
+    Click **Upload Document** and select a file. The file goes through validation (size, type, content) before uploading.
+  </Step>
+  <Step title="Wait for processing">
+    The document progresses through these stages:
+
+    1. **Uploading** — file is being transferred
+    2. **Converting** — content is extracted and converted to markdown
+    3. **Chunking** — text is split into searchable chunks
+    4. **Embedded** — chunks are converted to embeddings and stored
+
+    Once the status shows **Embedded**, your agent can answer questions from this document.
+  </Step>
+</Steps>
+
+<Warning>
+  If a document gets stuck in an error state, try re-uploading it. Common causes include corrupted files, scanned PDFs without text layers, or files exceeding content limits.
+</Warning>
+
+### Delete a document
+
+Click the delete icon next to a document in the Sources tab. This removes the document, its chunks, and its embeddings from the knowledge base.
+
+## Web sources
+
+Add content from websites by providing a URL. Mind-e crawls the page and indexes the content.
+
+### Add a web source
+
+<Steps>
+  <Step title="Enter a URL">
+    In the **Sources** tab, switch to the **Web Sources** section and enter a URL.
+  </Step>
+  <Step title="Discover pages (optional)">
+    Click **Discover** to find related pages on the same domain. This helps you index an entire website or section.
+  </Step>
+  <Step title="Train">
+    Click **Train** to crawl the URL, extract content, chunk it, and generate embeddings. The process is similar to document processing.
+  </Step>
+</Steps>
+
+## Text snippets
+
+Write custom text content directly — useful for FAQs, product details, or information that isn't in a document or on a website.
+
+### Create a text snippet
+
+<Steps>
+  <Step title="Open text snippets">
+    In the **Sources** tab, switch to the **Text Snippets** section.
+  </Step>
+  <Step title="Add content">
+    Click **Add Snippet**, enter a title and the content. The content is processed and indexed just like documents.
+  </Step>
+</Steps>
+
+## How retrieval works
+
+When a user asks a question, your agent:
+
+1. Converts the question into an embedding
+2. Searches all sources (documents, web sources, snippets) for the most relevant chunks
+3. Reranks the results to find the best matches
+4. Uses the top results as context to generate an answer
+
+The agent cites its sources in the response, so users can see where the information came from. See [Core Concepts](/core-concepts#rag-retrieval-augmented-generation) for a deeper explanation.
+
+## Tips
+
+- **Quality over quantity** — upload relevant, well-structured content. A few good documents perform better than many irrelevant ones.
+- **Keep content up to date** — delete outdated documents and re-upload updated versions.
+- **Use text snippets for FAQs** — if you find your agent struggles with specific questions, add a text snippet with the answer.
+- **Check document status** — if a document shows an error, the agent cannot use it. Re-upload or check the file format.

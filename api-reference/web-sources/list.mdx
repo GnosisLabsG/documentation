@@ -1,0 +1,49 @@
+---
+title: "List Web Sources"
+description: "Get all web sources for an agent."
+---
+
+## Endpoint
+
+```
+GET /web-sources
+```
+
+## Authentication
+
+Required.
+
+## Query parameters
+
+<ParamField query="agentId" type="string" required>
+  The agent ID.
+</ParamField>
+
+## Response
+
+<ResponseField name="success" type="boolean" />
+
+<ResponseField name="webSources" type="array">
+  <Expandable>
+    <ResponseField name="id" type="string">Web source ID</ResponseField>
+    <ResponseField name="agent_id" type="string">Agent ID</ResponseField>
+    <ResponseField name="url" type="string">Source URL</ResponseField>
+    <ResponseField name="mode" type="string">`crawl`, `sitemap`, or `single`</ResponseField>
+    <ResponseField name="max_pages" type="number">Maximum pages to crawl</ResponseField>
+    <ResponseField name="max_depth" type="number">Maximum crawl depth</ResponseField>
+    <ResponseField name="status" type="string">`ready`, `pending`, `discovering`, `scraping`, `chunking`, `completed`, or `error`</ResponseField>
+    <ResponseField name="discovered_urls" type="array">Discovered URLs from the domain</ResponseField>
+    <ResponseField name="scraped_count" type="number">Number of pages scraped</ResponseField>
+    <ResponseField name="total_chunks" type="number">Number of text chunks created</ResponseField>
+    <ResponseField name="error_message" type="string">Error details (if status is error)</ResponseField>
+    <ResponseField name="created_at" type="string">ISO 8601 timestamp</ResponseField>
+    <ResponseField name="updated_at" type="string">ISO 8601 timestamp</ResponseField>
+  </Expandable>
+</ResponseField>
+
+## Example
+
+```bash
+curl "https://api.mind-e.co/web-sources?agentId=agent-id-here" \
+  -H "Authorization: Bearer sk_live_your_key_here"
+```

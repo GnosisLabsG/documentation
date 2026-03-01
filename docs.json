@@ -1,88 +1,13 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Mint Starter Kit",
+  "name": "Mind-e",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#6f42c1",
+    "light": "#9657D5",
+    "dark": "#5c35a4"
   },
   "favicon": "/favicon.svg",
-  "navigation": {
-    "tabs": [
-      {
-        "tab": "Guides",
-        "groups": [
-          {
-            "group": "Getting started",
-            "pages": [
-              "index",
-              "quickstart",
-              "development"
-            ]
-          },
-          {
-            "group": "Customization",
-            "pages": [
-              "essentials/settings",
-              "essentials/navigation"
-            ]
-          },
-          {
-            "group": "Writing content",
-            "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/reusable-snippets"
-            ]
-          },
-          {
-            "group": "AI tools",
-            "pages": [
-              "ai-tools/cursor",
-              "ai-tools/claude-code",
-              "ai-tools/windsurf"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "API reference",
-        "groups": [
-          {
-            "group": "API documentation",
-            "pages": [
-              "api-reference/introduction"
-            ]
-          },
-          {
-            "group": "Endpoint examples",
-            "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
-            ]
-          }
-        ]
-      }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
-        }
-      ]
-    }
-  },
   "logo": {
     "light": "/logo/light.svg",
     "dark": "/logo/dark.svg"
@@ -91,32 +16,157 @@
     "links": [
       {
         "label": "Support",
-        "href": "mailto:hi@mintlify.com"
+        "href": "mailto:support@mind-e.co"
       }
     ],
     "primary": {
       "type": "button",
       "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
+      "href": "https://app.mind-e.co/dashboard"
     }
   },
-  "contextual": {
-    "options": [
-     "copy",
-     "view",
-     "chatgpt",
-     "claude",
-     "perplexity",
-     "mcp",
-     "cursor",
-     "vscode"
-   ]
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "pages": [
+              "introduction",
+              "quickstart",
+              "core-concepts"
+            ]
+          },
+          {
+            "group": "Guides",
+            "pages": [
+              "guides/creating-an-agent",
+              "guides/knowledge-base",
+              "guides/customizing-agent",
+              "guides/embedding-your-agent",
+              "guides/chat-appearance",
+              "guides/scenarios",
+              "guides/booking",
+              "guides/social-integrations",
+              "guides/conversations",
+              "guides/custom-actions"
+            ]
+          },
+          {
+            "group": "Account & Billing",
+            "pages": [
+              "account/plans-and-pricing",
+              "account/credits",
+              "account/settings",
+              "account/api-keys"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": [
+              "api-reference/introduction"
+            ]
+          },
+          {
+            "group": "Chat",
+            "pages": [
+              "api-reference/chat/send-message",
+              "api-reference/chat/upload-image",
+              "api-reference/chat/get-appearance"
+            ]
+          },
+          {
+            "group": "Agents",
+            "pages": [
+              "api-reference/agents/get-analytics"
+            ]
+          },
+          {
+            "group": "Documents",
+            "pages": [
+              "api-reference/documents/convert-document",
+              "api-reference/documents/conversion-status"
+            ]
+          },
+          {
+            "group": "Web Sources",
+            "pages": [
+              "api-reference/web-sources/list",
+              "api-reference/web-sources/create",
+              "api-reference/web-sources/get",
+              "api-reference/web-sources/update",
+              "api-reference/web-sources/delete",
+              "api-reference/web-sources/train",
+              "api-reference/web-sources/discover"
+            ]
+          },
+          {
+            "group": "Credits",
+            "pages": [
+              "api-reference/credits/get-balance",
+              "api-reference/credits/get-summary",
+              "api-reference/credits/get-history",
+              "api-reference/credits/agent-usage"
+            ]
+          },
+          {
+            "group": "Subscriptions",
+            "pages": [
+              "api-reference/subscriptions/get-subscription",
+              "api-reference/subscriptions/get-limits",
+              "api-reference/subscriptions/get-invoices"
+            ]
+          },
+          {
+            "group": "Booking",
+            "pages": [
+              "api-reference/booking/get-config",
+              "api-reference/booking/get-dates",
+              "api-reference/booking/get-slots",
+              "api-reference/booking/create-booking",
+              "api-reference/booking/cancel-booking",
+              "api-reference/booking/lookup-booking"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Resources",
+        "groups": [
+          {
+            "group": "Resources",
+            "pages": [
+              "resources/faq",
+              "resources/limits"
+            ]
+          }
+        ]
+      }
+    ],
+    "global": {
+      "anchors": [
+        {
+          "anchor": "Dashboard",
+          "href": "https://app.mind-e.co/dashboard",
+          "icon": "grid-2"
+        },
+        {
+          "anchor": "Support",
+          "href": "mailto:support@mind-e.co",
+          "icon": "envelope"
+        }
+      ]
+    }
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+      "website": "https://mind-e.co"
     }
   }
 }

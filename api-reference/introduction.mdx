@@ -1,33 +1,86 @@
 ---
-title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+title: "API Reference"
+description: "Integrate Mind-e into your applications using the REST API."
 ---
 
-<Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
-</Note>
+The Mind-e API lets you send chat messages, manage web sources, check credits, and more — all programmatically.
 
-## Welcome
+## Base URL
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+```
+https://api.mind-e.co
+```
 
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
-</Card>
+All API endpoints are relative to this base URL. For example, to send a chat message:
+
+```
+POST https://api.mind-e.co/chat
+```
 
 ## Authentication
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+Most API endpoints require authentication using a **Bearer token**. Pass your API key in the `Authorization` header:
+
+```bash
+Authorization: Bearer sk_live_your_api_key_here
+```
+
+Create API keys in your [dashboard settings](/account/api-keys). Keys can be scoped to a specific agent or work across all your agents.
+
+<Note>
+  Some endpoints are **public** (no authentication required) — these are used by the embeddable chat widget. They are marked as "Public" in the documentation.
+</Note>
+
+## Request format
+
+- Send JSON in the request body with `Content-Type: application/json`
+- File uploads use `multipart/form-data`
+- Query parameters are passed in the URL
+
+## Response format
+
+All responses return JSON with a `success` field:
 
 ```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
+{
+  "success": true,
+  // ... response data
+}
 ```
+
+On error:
+
+```json
+{
+  "success": false,
+  "error": "Description of what went wrong"
+}
+```
+
+## HTTP status codes
+
+| Code | Description |
+|------|-------------|
+| 200 | Success |
+| 400 | Bad request — invalid parameters or validation error |
+| 401 | Unauthorized — missing or invalid API key |
+| 402 | Payment required — insufficient credits |
+| 404 | Not found — resource doesn't exist |
+| 429 | Rate limited — too many requests |
+| 500 | Server error |
+
+## Rate limiting
+
+API requests are rate limited. When rate limited, the response includes these headers:
+
+| Header | Description |
+|--------|-------------|
+| `X-RateLimit-Limit` | Maximum requests allowed in the window |
+| `X-RateLimit-Remaining` | Remaining requests in the current window |
+| `X-RateLimit-Reset` | Unix timestamp when the window resets |
+
+If you receive a `429` response, wait until the reset time before retrying.
+
+## Credits
+
+API chat requests consume [credits](/account/credits) just like widget conversations. The response includes a `credits` object showing how many credits were used and your remaining balance.

@@ -1,0 +1,95 @@
+---
+title: "Upload Image"
+description: "Upload an image to include in a chat message."
+---
+
+Upload an image that can be referenced in a chat message. Returns a storage path to include in the [Send Message](/api-reference/chat/send-message) request.
+
+## Endpoint
+
+```
+POST /chat/public/upload-image
+```
+
+## Authentication
+
+None required (public endpoint).
+
+## Request
+
+Send as `multipart/form-data`:
+
+<ParamField body="agentId" type="string" required>
+  The agent ID.
+</ParamField>
+
+<ParamField body="conversationId" type="string">
+  Optional conversation ID for an existing conversation.
+</ParamField>
+
+<ParamField body="images" type="File[]" required>
+  Image files to upload. Maximum 4 images per request.
+</ParamField>
+
+### Image constraints
+
+| Constraint | Value |
+|------------|-------|
+| Max images per request | 4 |
+| Max file size | 20 MB |
+| Allowed formats | JPEG, PNG, GIF, WebP, BMP, TIFF |
+
+## Response
+
+<ResponseField name="success" type="boolean">
+  Whether the upload was successful.
+</ResponseField>
+
+<ResponseField name="images" type="array">
+  Uploaded image details.
+  <Expandable>
+    <ResponseField name="storage_path" type="string">Storage path to reference in chat requests</ResponseField>
+    <ResponseField name="file_name" type="string">Original file name</ResponseField>
+    <ResponseField name="file_size" type="number">File size in bytes</ResponseField>
+    <ResponseField name="content_type" type="string">MIME type</ResponseField>
+  </Expandable>
+</ResponseField>
+
+## Example
+
+```bash
+curl -X POST https://api.mind-e.co/chat/public/upload-image \
+  -F "agentId=agent-id-here" \
+  -F "images=@photo.jpg"
+```
+
+### Response
+
+```json
+{
+  "success": true,
+  "images": [
+    {
+      "storage_path": "chat-images/abc123/photo.jpg",
+      "file_name": "photo.jpg",
+      "file_size": 245760,
+      "content_type": "image/jpeg"
+    }
+  ]
+}
+```
+
+Then reference the image in a [Send Message](/api-reference/chat/send-message) request:
+
+```json
+{
+  "agentId": "agent-id-here",
+  "message": "What is shown in this image?",
+  "images": [
+    {
+      "storage_path": "chat-images/abc123/photo.jpg",
+      "content_type": "image/jpeg"
+    }
+  ]
+}
+```

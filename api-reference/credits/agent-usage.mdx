@@ -1,0 +1,63 @@
+---
+title: "Get Agent Credit Usage"
+description: "Get credit usage details for a specific agent."
+---
+
+## Endpoint
+
+```
+GET /credits/agent/{agentId}
+```
+
+## Authentication
+
+Required.
+
+## Path parameters
+
+<ParamField path="agentId" type="string" required>
+  The agent ID.
+</ParamField>
+
+## Query parameters
+
+<ParamField query="days" type="number">
+  Number of days to include. Default: `30`.
+</ParamField>
+
+## Response
+
+<ResponseField name="success" type="boolean" />
+
+<ResponseField name="agent" type="object">
+  Agent info: `id` and `name`.
+</ResponseField>
+
+<ResponseField name="summary" type="object">
+  <Expandable>
+    <ResponseField name="totalCredits" type="number">Total credits used by this agent</ResponseField>
+    <ResponseField name="totalMessages" type="number">Total messages processed</ResponseField>
+    <ResponseField name="periodDays" type="number">Number of days in the period</ResponseField>
+    <ResponseField name="avgCreditsPerDay" type="number">Average daily credit usage</ResponseField>
+    <ResponseField name="avgCreditsPerMessage" type="number">Average credits per message</ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="byFeature" type="array">
+  Breakdown by feature: `feature`, `credits`, `count`.
+</ResponseField>
+
+<ResponseField name="bySource" type="array">
+  Breakdown by source: `source`, `credits`.
+</ResponseField>
+
+<ResponseField name="dailyUsage" type="array">
+  Daily usage: `date` (YYYY-MM-DD) and `credits`.
+</ResponseField>
+
+## Example
+
+```bash
+curl "https://api.mind-e.co/credits/agent/agent-id-here?days=7" \
+  -H "Authorization: Bearer sk_live_your_key_here"
+```

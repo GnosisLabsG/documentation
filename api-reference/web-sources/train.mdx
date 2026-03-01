@@ -1,0 +1,45 @@
+---
+title: "Train Web Source"
+description: "Start crawling and processing a web source to add its content to the knowledge base."
+---
+
+Initiates crawling, content extraction, chunking, and embedding for a web source. This is an asynchronous operation.
+
+## Endpoint
+
+```
+POST /web-sources/{id}/train
+```
+
+## Authentication
+
+Required.
+
+## Path parameters
+
+<ParamField path="id" type="string" required>
+  The web source ID.
+</ParamField>
+
+## Response
+
+<ResponseField name="success" type="boolean" />
+
+<ResponseField name="webSource" type="object">
+  The web source with updated status (set to `scraping`).
+</ResponseField>
+
+<ResponseField name="callId" type="string">
+  Processing job ID.
+</ResponseField>
+
+## Example
+
+```bash
+curl -X POST https://api.mind-e.co/web-sources/ws-id-here/train \
+  -H "Authorization: Bearer sk_live_your_key_here"
+```
+
+<Note>
+  Training is asynchronous. The web source status progresses through `scraping` → `chunking` → `completed`. Check the web source status using [Get Web Source](/api-reference/web-sources/get).
+</Note>

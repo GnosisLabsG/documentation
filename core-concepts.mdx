@@ -1,0 +1,124 @@
+---
+title: "Core Concepts"
+description: "Understand the key building blocks of Mind-e: agents, knowledge base, RAG, conversations, credits, and scenarios."
+---
+
+## Agents
+
+An agent is your AI assistant. Each agent has its own:
+
+- **Name and description** — identifies the agent
+- **System prompt** — instructions that define how the agent responds (personality, rules, tone)
+- **AI model** — the language model used for generating responses (e.g., GPT-4o, Claude, Gemini)
+- **Temperature** — controls creativity vs. consistency (0.0 = very reserved, 2.0 = very creative)
+- **Knowledge base** — the documents, web sources, and snippets the agent draws from
+
+You can create multiple agents, each with its own knowledge base and configuration. The number of agents you can create depends on your [plan](/account/plans-and-pricing).
+
+## Knowledge base
+
+The knowledge base is the content your agent uses to answer questions. There are three types of sources:
+
+### Documents
+
+Upload files that the agent should learn from. Supported formats:
+
+| Format | Extension | Max size | Max content |
+|--------|-----------|----------|-------------|
+| PDF | `.pdf` | 50 MB | 500 pages |
+| Word | `.docx` | 50 MB | 300 pages |
+| Text | `.txt` | 10 MB | 5M characters |
+| Markdown | `.md` | 10 MB | 5M characters |
+
+When you upload a document, Mind-e converts it to markdown, splits it into chunks, generates embeddings, and stores them for retrieval.
+
+### Web sources
+
+Add a URL and Mind-e crawls the page, extracts the content, and adds it to your agent's knowledge base. You can also discover related pages from the same domain.
+
+### Text snippets
+
+Write custom text content directly. Useful for FAQs, product descriptions, or any information not in a document or on a website.
+
+## RAG (Retrieval-Augmented Generation)
+
+RAG is the process that connects your knowledge base to the AI model. Here's what happens when a user sends a message:
+
+<Steps>
+  <Step title="Embed the query">
+    The user's message is converted into a numerical vector (embedding) using OpenAI's `text-embedding-3-large` model.
+  </Step>
+  <Step title="Search the knowledge base">
+    The embedding is compared against all chunks stored in the agent's vector database (Pinecone). The top 20 most relevant chunks are retrieved.
+  </Step>
+  <Step title="Rerank results">
+    The 20 results are reranked using a cross-encoder model to find the 5 most relevant chunks for the specific question.
+  </Step>
+  <Step title="Generate a response">
+    The AI model receives the system prompt, the 5 relevant chunks as context, the conversation history, and the user's message. It generates a response grounded in your content.
+  </Step>
+</Steps>
+
+### Query expansion
+
+When enabled, Mind-e automatically expands short or vague queries with additional keywords before searching. This improves retrieval for brief questions like "pricing" or "how to install." You can toggle this per agent in settings.
+
+## Conversations
+
+Every chat interaction creates a conversation — a thread of messages between a user and your agent. Conversations are tracked by source:
+
+- **Playground** — testing in the dashboard
+- **Widget** — from the embedded chat widget on your website
+- **Social media** — from Instagram, WhatsApp, Telegram, or Messenger
+
+You can view all conversations in the **Chat History** tab of your agent. Each message shows the agent's response along with the source documents it referenced.
+
+## Credits
+
+Credits are the currency for using Mind-e's AI features. Every action that uses AI costs credits:
+
+| Action | Credit cost |
+|--------|------------|
+| Chat message (mini models) | 1 credit |
+| Chat message (standard models) | 2 credits |
+| Chat message (premium models) | 3 credits |
+| Image input | +3 credits |
+| Query expansion | +2 credits |
+| Long response (>2000 tokens) | +1 credit |
+| Scenario trigger | +1 credit |
+| Text-to-speech (short) | 1 credit |
+| Text-to-speech (medium) | 2 credits |
+| Text-to-speech (long) | 3 credits |
+
+New accounts receive **100 credits** on signup. Paid plans include monthly credit allowances — see [Plans & Pricing](/account/plans-and-pricing) for details.
+
+<Note>
+  Model tiers: **Mini** includes GPT-4o Mini, Gemini Flash, Claude Haiku. **Standard** includes GPT-4o, GPT-4.1, Gemini Pro, Claude Sonnet, Grok 2. **Premium** includes GPT-5.2, Claude Opus, Grok 3.
+</Note>
+
+## Scenarios
+
+Scenarios are interactive conversation flows you build with a visual editor. Instead of open-ended chat, scenarios guide users through a structured sequence of steps.
+
+**Node types** you can use in a scenario:
+
+- **Start** — entry point, triggered by keywords or intent
+- **Message** — sends a message to the user
+- **Question** — asks the user a question with validation (email, phone, number)
+- **Form** — collects structured data through a multi-field form
+- **Delay** — waits a specified duration before continuing
+- **End** — completes the scenario
+
+Scenarios are triggered automatically when the AI detects matching keywords or intent in a user's message. You can view form submissions and user responses in the **Submissions** tab.
+
+## Actions
+
+Actions extend what your agent can do beyond answering questions:
+
+- **Custom buttons** — add clickable buttons that link to URLs in the agent's responses
+- **Custom forms** — collect structured information (name, email, phone) directly in chat
+- **Booking** — let users schedule appointments with configurable availability, duration options, and booking forms
+
+## API keys
+
+You can interact with your agents programmatically using the [REST API](/api-reference/introduction). Create API keys in your [account settings](/account/api-keys) to authenticate requests. Keys can be scoped to a specific agent or work across all your agents.

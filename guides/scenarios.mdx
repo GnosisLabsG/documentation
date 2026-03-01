@@ -1,0 +1,130 @@
+---
+title: "Scenarios"
+description: "Build interactive conversation flows with the visual scenario editor — guide users through forms, choices, and multi-step processes."
+---
+
+Scenarios let you create structured conversation flows instead of open-ended chat. Use them to collect information, guide users through processes, or handle specific topics with a defined sequence of steps.
+
+## How scenarios work
+
+A scenario is triggered when the AI detects a matching condition in a user's message. Once triggered, the conversation follows a defined flow of nodes until it reaches an end node. The user can exit a scenario at any time using exit keywords.
+
+## Creating a scenario
+
+<Steps>
+  <Step title="Open the scenario editor">
+    Go to your agent's **Scenarios** tab and click **Create Scenario**. Give it a name and description.
+  </Step>
+
+  <Step title="Configure the trigger">
+    Every scenario starts with a **Start node**. Choose how it gets triggered:
+
+    | Trigger type | How it works |
+    |-------------|-------------|
+    | **Keyword** | Triggered when the user's message contains one of the specified keywords. Add one or more keywords. |
+    | **Intent** | Triggered when the AI detects the described intent in the user's message. Write a natural language description (e.g., "user wants to book an appointment"). |
+    | **Always** | Triggered for every conversation. Use sparingly — typically for onboarding flows. |
+  </Step>
+
+  <Step title="Add nodes">
+    Drag nodes onto the canvas and connect them to build your flow. See the node types below.
+  </Step>
+
+  <Step title="Connect nodes">
+    Draw edges between nodes to define the flow. For question nodes with choices, you can set conditions on edges to create branching paths.
+  </Step>
+
+  <Step title="Save and enable">
+    Click **Save** to store the scenario. Toggle **Enabled** to activate it for your agent.
+  </Step>
+</Steps>
+
+## Node types
+
+### Message node
+
+Sends a text message to the user. You can optionally include a button.
+
+- **Message text** — the message content
+- **Show button** (optional) — display a clickable button with custom text and URL
+
+### Question node
+
+Asks the user a question and stores their answer in a variable.
+
+- **Question text** — what to ask
+- **Variable name** — where to store the answer (used in later nodes)
+- **Input type**:
+  - **Text** — free-text input with optional validation (email, phone, or number)
+  - **Choice** — multiple-choice options (requires at least 2 choices)
+- **Validation** — for text input: none, email, phone, or number
+- **Required** — whether the user must answer
+- **Confirmation** — optionally ask the user to confirm their answer
+
+### Form node
+
+Displays a multi-field form for collecting structured data.
+
+- **Pre-form message** — text shown before the form appears
+- **Form title** — heading of the form
+- **Form fields** — add input fields (text, email, phone, textarea) and file uploads
+- **Submit button text** — label for the submit button
+
+### Delay node
+
+Pauses the conversation for a specified duration.
+
+- **Duration** — wait time in milliseconds
+- **Show typing indicator** — display a typing animation during the wait
+
+### End node
+
+Concludes the scenario with an optional action.
+
+- **End message** — final message to the user
+- **Action on end**:
+  - **None** — just end the scenario
+  - **Save submission** — save all collected data
+  - **Trigger webhook** — send collected data to an external URL
+  - **Show button** — display a button with a link
+
+## Branching
+
+Connect a question node with choices to different paths using **edge conditions**:
+
+| Condition | Description |
+|-----------|-------------|
+| **Default** | Fallback path if no other condition matches |
+| **Equals** | Matches when the answer exactly equals a value |
+| **Contains** | Matches when the answer contains a value |
+| **Choice** | Matches when the user selects a specific choice option |
+
+This lets you create different flows based on user responses — for example, routing a support request differently based on the category selected.
+
+## Scenario settings
+
+- **Exit keywords** — words that let the user leave the scenario (e.g., "cancel", "exit", "stop")
+- **Exit message** — message shown when the user exits
+- **Save on exit** — whether to save partial data when the user exits
+- **Priority** — determines which scenario triggers first when multiple scenarios match (higher number = higher priority)
+- **Enabled** — toggle to activate or deactivate the scenario
+
+## Viewing submissions
+
+Go to your scenario's **Submissions** tab to see all data collected through the scenario. Each submission includes the form data, timestamps, and the conversation it came from.
+
+## Validation rules
+
+The scenario editor validates your flow before saving:
+
+- Must have exactly **1 Start node**
+- Must have at least **1 End node**
+- Start node must have an outgoing connection
+- Keyword triggers must have at least 1 keyword
+- Intent triggers must have a description
+- Choice questions must have at least 2 options
+- Form nodes must have at least 1 field
+
+<Note>
+  Each scenario trigger costs **1 credit** when activated. The scenario itself doesn't cost credits beyond the initial trigger and any chat messages within it.
+</Note>

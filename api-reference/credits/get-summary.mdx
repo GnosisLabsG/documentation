@@ -1,0 +1,56 @@
+---
+title: "Get Credit Summary"
+description: "Get a detailed credit usage summary with breakdowns by agent, feature, source, and daily usage."
+---
+
+## Endpoint
+
+```
+GET /credits/summary
+```
+
+## Authentication
+
+Required.
+
+## Query parameters
+
+<ParamField query="days" type="number">
+  Number of days to include. Default: `30`.
+</ParamField>
+
+## Response
+
+<ResponseField name="success" type="boolean" />
+
+<ResponseField name="summary" type="object">
+  <Expandable>
+    <ResponseField name="balance" type="number">Current balance</ResponseField>
+    <ResponseField name="lifetimeUsed" type="number">All-time usage</ResponseField>
+    <ResponseField name="periodUsed" type="number">Usage in the requested period</ResponseField>
+    <ResponseField name="periodDays" type="number">Number of days in the period</ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="byAgent" type="array">
+  Per-agent breakdown: `agentId`, `agentName`, `agentCategory`, `totalCredits`, `chatCredits`, `ttsCredits`, `messageCount`.
+</ResponseField>
+
+<ResponseField name="byFeature" type="array">
+  Per-feature breakdown: `feature`, `totalCredits`, `count`.
+</ResponseField>
+
+<ResponseField name="bySource" type="array">
+  Per-source breakdown: `source` (playground, widget, api, etc.), `totalCredits`, `count`.
+</ResponseField>
+
+<ResponseField name="dailyUsage" type="array">
+  Daily credit usage: `date` (YYYY-MM-DD) and `credits`.
+</ResponseField>
+
+## Example
+
+```bash
+curl "https://api.mind-e.co/credits/summary?days=7" \
+  -H "Authorization: Bearer sk_live_your_key_here"
+```

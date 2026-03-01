@@ -1,0 +1,98 @@
+---
+title: "Get Agent Analytics"
+description: "Retrieve usage analytics and metrics for a specific agent."
+---
+
+Get analytics data for an agent, including conversation counts, source breakdowns, and top referenced documents.
+
+## Endpoint
+
+```
+GET /agents/{agentId}/analytics
+```
+
+## Authentication
+
+Required. You must own the agent.
+
+## Path parameters
+
+<ParamField path="agentId" type="string" required>
+  The agent ID.
+</ParamField>
+
+## Query parameters
+
+<ParamField query="days" type="number">
+  Number of days to include. Default: `30`. Set to `0` for all time.
+</ParamField>
+
+## Response
+
+<ResponseField name="success" type="boolean">
+  Whether the request was successful.
+</ResponseField>
+
+<ResponseField name="data" type="object">
+  Analytics data.
+  <Expandable>
+    <ResponseField name="overview" type="object">
+      Summary metrics: `totalConversations`, `periodConversations`, `totalMessages`, `avgMessagesPerConvo`, `sourceCitationRate` (percentage).
+    </ResponseField>
+    <ResponseField name="conversationsOverTime" type="array">
+      Daily conversation counts: `date` (YYYY-MM-DD) and `conversations` (count).
+    </ResponseField>
+    <ResponseField name="sourceBreakdown" type="array">
+      Conversations by source: `name` (playground, iframe, widget, api) and `value` (count).
+    </ResponseField>
+    <ResponseField name="topDocuments" type="array">
+      Most referenced documents: `id`, `name`, and `count`.
+    </ResponseField>
+    <ResponseField name="recentQuestions" type="array">
+      Recent user messages: `id`, `content`, `created_at`, `conversation_id`.
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+## Example
+
+```bash
+curl "https://api.mind-e.co/agents/agent-id-here/analytics?days=7" \
+  -H "Authorization: Bearer sk_live_your_key_here"
+```
+
+### Response
+
+```json
+{
+  "success": true,
+  "data": {
+    "overview": {
+      "totalConversations": 156,
+      "periodConversations": 42,
+      "totalMessages": 312,
+      "avgMessagesPerConvo": 2.0,
+      "sourceCitationRate": 85.5
+    },
+    "conversationsOverTime": [
+      { "date": "2026-02-22", "conversations": 5 },
+      { "date": "2026-02-23", "conversations": 8 }
+    ],
+    "sourceBreakdown": [
+      { "name": "widget", "value": 30 },
+      { "name": "playground", "value": 12 }
+    ],
+    "topDocuments": [
+      { "id": "doc-1", "name": "product-guide.pdf", "count": 45 }
+    ],
+    "recentQuestions": [
+      {
+        "id": "msg-1",
+        "content": "How do I reset my password?",
+        "created_at": "2026-02-28T14:30:00Z",
+        "conversation_id": "conv-1"
+      }
+    ]
+  }
+}
+```

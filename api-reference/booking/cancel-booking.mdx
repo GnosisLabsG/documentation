@@ -1,0 +1,58 @@
+---
+title: "Cancel Booking"
+description: "Cancel an existing booking using the booking code."
+---
+
+## Endpoint
+
+```
+POST /booking/public/cancel
+```
+
+## Authentication
+
+None required (public endpoint).
+
+## Request body
+
+<ParamField body="agentId" type="string" required>
+  The agent ID.
+</ParamField>
+
+<ParamField body="bookingCode" type="string" required>
+  The booking confirmation code (e.g., `BK-A1B2C3`).
+</ParamField>
+
+## Response
+
+<ResponseField name="success" type="boolean" />
+
+<ResponseField name="message" type="string">
+  Confirmation message.
+</ResponseField>
+
+## Cancellation rules
+
+- The booking must be in `pending` or `confirmed` status
+- User cancellation must be enabled in the agent's booking config
+- The cancellation must meet the notice period requirement (e.g., 12 hours before the appointment)
+
+## Example
+
+```bash
+curl -X POST https://api.mind-e.co/booking/public/cancel \
+  -H "Content-Type: application/json" \
+  -d '{
+    "agentId": "agent-id-here",
+    "bookingCode": "BK-A1B2C3"
+  }'
+```
+
+### Response
+
+```json
+{
+  "success": true,
+  "message": "Booking cancelled successfully"
+}
+```

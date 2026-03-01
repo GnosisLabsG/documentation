@@ -1,0 +1,82 @@
+---
+title: "Lookup Booking"
+description: "Look up booking details using a confirmation code."
+---
+
+## Endpoint
+
+```
+GET /booking/public/lookup
+```
+
+## Authentication
+
+None required (public endpoint).
+
+## Query parameters
+
+<ParamField query="agentId" type="string" required>
+  The agent ID.
+</ParamField>
+
+<ParamField query="code" type="string" required>
+  The booking confirmation code (e.g., `BK-A1B2C3`).
+</ParamField>
+
+## Response
+
+<ResponseField name="success" type="boolean" />
+
+<ResponseField name="booking" type="object">
+  <Expandable>
+    <ResponseField name="id" type="string">Booking ID</ResponseField>
+    <ResponseField name="booking_code" type="string">Confirmation code</ResponseField>
+    <ResponseField name="booking_date" type="string">Date (YYYY-MM-DD)</ResponseField>
+    <ResponseField name="start_time" type="string">Start time (HH:MM:SS)</ResponseField>
+    <ResponseField name="end_time" type="string">End time (HH:MM:SS)</ResponseField>
+    <ResponseField name="duration_minutes" type="number">Duration in minutes</ResponseField>
+    <ResponseField name="duration_label" type="string">Duration option label</ResponseField>
+    <ResponseField name="timezone" type="string">Timezone</ResponseField>
+    <ResponseField name="status" type="string">Booking status</ResponseField>
+    <ResponseField name="form_data" type="object">Submitted form data</ResponseField>
+    <ResponseField name="booking_title" type="string">Booking title from config</ResponseField>
+    <ResponseField name="display_date" type="string">Formatted display date</ResponseField>
+    <ResponseField name="display_time" type="string">Formatted time range</ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="canCancel" type="boolean">
+  Whether the booking can be cancelled.
+</ResponseField>
+
+<ResponseField name="cancelReason" type="string">
+  If `canCancel` is false, the reason why (e.g., "Cancellation notice period has passed").
+</ResponseField>
+
+## Example
+
+```bash
+curl "https://api.mind-e.co/booking/public/lookup?agentId=agent-id-here&code=BK-A1B2C3"
+```
+
+### Response
+
+```json
+{
+  "success": true,
+  "booking": {
+    "booking_code": "BK-A1B2C3",
+    "booking_date": "2026-03-05",
+    "start_time": "10:00:00",
+    "end_time": "10:30:00",
+    "duration_minutes": 30,
+    "duration_label": "30-minute call",
+    "timezone": "America/New_York",
+    "status": "confirmed",
+    "booking_title": "Schedule a Consultation",
+    "display_date": "March 5, 2026",
+    "display_time": "10:00 AM - 10:30 AM"
+  },
+  "canCancel": true
+}
+```

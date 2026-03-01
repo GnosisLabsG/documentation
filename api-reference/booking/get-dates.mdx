@@ -1,0 +1,66 @@
+---
+title: "Get Available Dates"
+description: "Get available booking dates for a given month."
+---
+
+## Endpoint
+
+```
+GET /booking/public/dates
+```
+
+## Authentication
+
+None required (public endpoint).
+
+## Query parameters
+
+<ParamField query="agentId" type="string" required>
+  The agent ID.
+</ParamField>
+
+<ParamField query="month" type="string" required>
+  Month to check, format: `YYYY-MM` (e.g., `2026-03`).
+</ParamField>
+
+<ParamField query="durationMinutes" type="number">
+  Duration to check availability for. Helps filter dates that have enough time for the selected duration.
+</ParamField>
+
+## Response
+
+<ResponseField name="success" type="boolean" />
+
+<ResponseField name="month" type="string">The requested month.</ResponseField>
+
+<ResponseField name="timezone" type="string">Agent's configured timezone.</ResponseField>
+
+<ResponseField name="dates" type="array">
+  <Expandable>
+    <ResponseField name="date" type="string">Date in YYYY-MM-DD format</ResponseField>
+    <ResponseField name="available" type="boolean">Whether the date has available slots</ResponseField>
+    <ResponseField name="slotCount" type="number">Number of available slots (if available)</ResponseField>
+  </Expandable>
+</ResponseField>
+
+## Example
+
+```bash
+curl "https://api.mind-e.co/booking/public/dates?agentId=agent-id-here&month=2026-03"
+```
+
+### Response
+
+```json
+{
+  "success": true,
+  "month": "2026-03",
+  "timezone": "America/New_York",
+  "dates": [
+    { "date": "2026-03-02", "available": true, "slotCount": 8 },
+    { "date": "2026-03-03", "available": true, "slotCount": 6 },
+    { "date": "2026-03-04", "available": false },
+    { "date": "2026-03-05", "available": true, "slotCount": 8 }
+  ]
+}
+```
